@@ -1,0 +1,179 @@
+:root {
+    --primary-bg: #121212;
+    --card-bg: #1E1E1E;
+    --input-bg: #2D2D2D;
+    --input-border: #404040;
+    --input-focus: #4CAF50;
+    --button-bg: #4CAF50;
+    --button-hover: #45a049;
+    --text-primary: #FFFFFF;
+    --text-secondary: #E0E0E0;
+    --error: #fd4242;
+    --error-bg: #411218;
+    --error-border: #FF4444;
+    --error-text: #FFF0F0;
+    --error-icon: #FF6B6B;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #121212;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 1rem;
+}
+
+.login-card {
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    color: var(--text-primary);
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+}
+
+.login-card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1.75rem;
+}
+
+.login-card input {
+    width: 100%;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    height: 3rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-card input:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.login-card button {
+    background-color: var(--button-bg);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-card button:hover {
+    background-color: var(--button-hover);
+}
+
+.login-card p {
+    color: var(--text-secondary);
+    margin-top: 1rem;
+}
+
+.login-card p a {
+    color: var(--button-bg);
+    text-decoration: none;
+}
+
+.error-message {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 2px solid var(--error-border);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 500px;
+    width: 100%;
+    animation: slideIn 0.3s ease-out;
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.15);
+    margin-top: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    max-height: 200px; /* Adjust based on your content */
+}
+
+.error-message.hidden {
+    max-height: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    opacity: 0;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fa-circle-exclamation {
+    color: var(--error-icon);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.error-message span {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Hover effect */
+.error-message:hover {
+    background-color: #4d1419;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* Focus styles for accessibility */
+.error-message:focus-within {
+    outline: 2px solid var(--error-border);
+    outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .error-message {
+        padding: 0.875rem 1rem;
+        font-size: 0.9375rem;
+    }
+
+    .fa-circle-exclamation {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+}

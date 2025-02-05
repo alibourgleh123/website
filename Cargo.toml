@@ -1,0 +1,13 @@
+[package]
+name = "tired"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-files = "0.6.6"
+actix-web = "4.9.0"
+argon2 = "0.5.3"
+bcrypt = "0.16.0"
+rayon = "1.10.0"
+rusqlite = { version = "0.33.0", features = ["bundled"] }
+serde = { version = "1.0.217", features = ["derive"] }
