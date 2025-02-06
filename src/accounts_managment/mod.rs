@@ -1,6 +1,6 @@
 pub mod login;
 pub mod register;
-pub mod endpoints;
+pub mod misc_endpoints;
 
 use std::process::exit;
 

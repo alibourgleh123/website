@@ -68,30 +68,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (passwordInput.value == "") {
             showError("لم تعطنا كلمة مرور!");
             return;
-        }
-
-        fetch("/login", {
-            method: "POST",
-            body: JSON.stringify({
-              username: usernameInput.value,
-              password: passwordInput.value,
-              token: localStorage.getItem("access_token")
-            }),
+        }   
+        fetch('/login', {
+            method: 'POST',
             headers: {
-              "Content-type": "application/json; charset=UTF-8"
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: usernameInput.value,
+                password: passwordInput.value,
+                token: localStorage.getItem("access_token")
+            })
+        })
+        .then(response => {
+            if (response.redirected) {
+                // If the server redirects, follow the redirect
+                window.location.replace(response.url);
+            } else {
+                return response.json();
             }
-          })
-            .then((response) => response.json())
-            .then((json) => {
-                if (json.server_returned_an_error) {
-                    showError("واجه خادمنا خطأً، حاول أن تسجل الدخول لاحقاً");
-                    return;
-                }
-                if (json.access_granted) {
-                    // TODO
-                } else {
-                    showError("اسم المستخدم أو كلمة المرور خاطئة");
-                }
-            });          
+        })
+        .then(data => {
+            if (data && !data.access_granted) {
+                showError("اسم المستخدم أو كلمة المرور خاطئة");
+            }
+        })
+        .catch(error => {
+            showError(`حدث خطأ:\n${error}`);
+        });
     });
 });

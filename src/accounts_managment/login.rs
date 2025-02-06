@@ -1,6 +1,6 @@
-use crate::accounts_managment::{get_database_connection, verify, Account};
+use crate::{accounts_managment::{get_database_connection, verify, Account}, config::USE_HTTPS};
 
-use actix_web::{post, web, Responder};
+use actix_web::{cookie::Cookie, post, web, HttpResponse, Responder};
 use rusqlite::{params, Connection, Result};
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
@@ -25,7 +25,7 @@ pub fn login_with_token(connection: &Connection, token: &str) -> Result<bool> {
 }
 
 #[derive(Deserialize)]
-struct loginRequest {
+struct LoginRequest {
     username: String,
     password: String,
     token: String
@@ -38,22 +38,35 @@ struct LoginResponse {
 }
 
 #[post("/login")]
-pub async fn login_endpoint(info: web::Json<loginRequest>) -> actix_web::Result<impl Responder> {
+pub async fn login_endpoint(info: web::Json<LoginRequest>) -> actix_web::Result<impl Responder> {
     let connection = get_database_connection().unwrap();
 
     let login = login(&connection, &info.username, &info.password, &info.token);
 
     match login {
         Ok(access_granted) => {
-            return Ok(web::Json(LoginResponse {
-                access_granted: access_granted,
-                server_returned_an_error: false
+            if access_granted {
+                let auth_cookie = Cookie::build("auth_token", &info.token)
+                    .path("/")
+                    .http_only(true)
+                    .secure(USE_HTTPS)  // Set to true if using HTTPS
+                    .finish();
+
+                return Ok(HttpResponse::Found()
+                    .append_header(("Location", "/ar/main.html"))
+                    .cookie(auth_cookie)
+                    .finish());
+            }
+
+            return Ok(HttpResponse::Unauthorized().json(LoginResponse {
+                access_granted: false,
+                server_returned_an_error: false,
             }));
         },
         Err(_) => {
-            return Ok(web::Json(LoginResponse {
+            return Ok(HttpResponse::InternalServerError().json(LoginResponse {
                 access_granted: false,
-                server_returned_an_error: true
+                server_returned_an_error: true,
             }));
         }
     }

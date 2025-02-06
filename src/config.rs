@@ -11,3 +11,7 @@
  */
 pub const HASH_IMPORTANT_INFORMATION: bool = false;
 
+/*
+ * This setting controls whenever HTTPS specific options are enabled or not in the webserver>
+ */
+pub const USE_HTTPS: bool = false;
