@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #4CAF50;
+            --accent-hover: #45a049;
+            --error: #fd4242;
+            --error-bg: #411218;
+            --error-border: #FF4444;
+            --error-text: #FFF0F0;
+            --error-icon: #FF6B6B;
+        }
+
+        @font-face {
+            font-family: "Rubik";
+            /*src: url("../../site/fonts/Rubik-VariableFont_wght.ttf") format("truetype");*/
+            src: url('/fonts/Rubik-VariableFont_wght.ttf') format("truetype");
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Rubik, system-ui, -apple-system, sans-serif;
+        }
+
+        html,body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex-shrink: 0;
+            background-color: var(--bg-secondary);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header with integrated navigation */
+        .header {
+            background-color: var(--bg-secondary);
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link.active {
+            background-color: var(--accent);
+        }
+
+        .nav-link:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Responsive design */
+        @media (max-width: 950px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                flex-direction: column;
+                background-color: var(--bg-secondary);
+                padding: 1rem;
+            }
+        
+            .nav-links.active {
+                display: flex;
+            }
+        
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+        
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Tab navigation styling */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--bg-secondary);
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .tab-button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Tab content styling */
+        .tab-content {
+            display: none;
+            padding: 2rem 0;  /* Removed background, adjusted padding */
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Button styling */
+        .cta-button {
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 2rem;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .title {
+            display: inline;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .title h4 {
+            color: gray;
+        }
+
+        /* Popup Overlay */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Close Button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+        
+        .form-card {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Full height of the grid cell */
+        }
+        
+        .form-header {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+        
+        .form-field {
+            margin-bottom: 0.75rem;
+        }
+        
+        .field-label {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .field-value {
+            color: var(--text-primary);
+        }
+        
+        .timestamp {
+            margin-top: auto;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-align: left;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .loading-text {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .error-message {
+            background-color: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: var(--error-text);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="title">
+                <h2 class="logo">مبادرة الأطباء المغتربين</h2>
+                <h4>في مدينة التل</h3>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav class="nav-links">
+                <a class="nav-link active" data-tab="home">الرئيسية</a>
+                <a class="nav-link" data-tab="join-forms">نماذج الإنضمام</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="home" class="tab-content active">
+            <section class="hero">
+                <h1>أهلاً وسهلاً</h1>
+                <p>هذه لوحة التحكم بالموقع، من هنا تستطيع إدارة الموقع </p>
+            </section>
+
+            <section>
+                <center>
+                    <h3>عدد الزيارات للموقع</h3>
+                    <h2 style="color: gray;">غير متوفر</h2>
+                </center>
+            </section>
+        </div>
+
+        <!-- Join forms -->
+        <div id="join-forms" class="tab-content">
+            <center><h1 style="margin-bottom: 1rem;">نماذج الإنضمام للمبادرة</h1></center>
+            <div id="forms-container" class="forms-grid">
+                <div class="loading-text">جاري التحميل...</div>
+            </div>
+        </div>
+
+
+
+        <!-- Popup Dialog -->
+        <div id="popup" class="popup">
+            <div class="popup-content" id="popup-content">
+                <span class="close" id="closePopup">&times;</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 مبادرة الأطباء المغتربين في مدينة التل. جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script>
+        // Forms handler
+        async function fetchForms() {
+            try {
+                const response = await fetch('/get_forms', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: localStorage.getItem("access_token")
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch forms');
+                }
+                console.log(response.text());
+                //const data = await response.json();
+                return "";
+            } catch (error) {
+                console.error('Error fetching forms:', error);
+                throw error;
+            }
+        }
+
+        function createFormCard(form) {
+            return `
+                <div class="form-card">
+                    <div class="form-header">
+                        <h3>${form.name}</h3>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">التخصص</div>
+                        <div class="field-value">${form.speciality}</div>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">مكان الإقامة</div>
+                        <div class="field-value">${form.residence}</div>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">رقم الهاتف</div>
+                        <div class="field-value" dir="auto">${form.phone_number}</div>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">البريد الإلكتروني</div>
+                        <div class="field-value" dir="auto">${form.email}</div>
+                    </div>
+                    ${form.more ? `
+                    <div class="form-field">
+                        <div class="field-label">معلومات إضافية</div>
+                        <div class="field-value">${form.more}</div>
+                    </div>
+                    ` : ''}
+                    <div class="timestamp">
+                        ${form.time}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function displayForms() {
+            const container = document.getElementById('forms-container');
+            
+            try {
+                let forms;
+                
+                await fetch('/get_forms', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: localStorage.getItem("access_token")
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    forms = data.forms;
+                });
+                
+                if (forms.length === 0) {
+                    container.innerHTML = '<div class="loading-text">لا يوجد نماذج مقدمة حتى الآن</div>';
+                    return;
+                }
+
+                container.innerHTML = forms
+                    .sort((a, b) => new Date(b.time) - new Date(a.time))
+                    .map(form => createFormCard(form))
+                    .join('');
+                    
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error-message">
+                        حدث خطأ أثناء تحميل النماذج. الرجاء المحاولة مرة أخرى لاحقاً.
+                    </div>
+                `;
+            }
+        }
+
+        // Load forms when the tab is shown
+        document.querySelector('[data-tab="join-forms"]').addEventListener('click', displayForms);
+
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.nav-link');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            
+                navLinks.classList.toggle('active');
+            });
+        });
+
+
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Navigation functionality
+        const navItems = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href').substring(1);
+
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                document.getElementById(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu after clicking
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

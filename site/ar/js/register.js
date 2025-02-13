@@ -32,13 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
         errorElement.classList.add('hidden');
     }
 
+    let toggleErrorMessageHiding = 0;
+
     document.addEventListener('click', function(event) {
         const errorElement = document.getElementById('error-message');
+
+        if (!errorElement) return;
+
         const isClickInside = errorElement.contains(event.target);
         const isErrorVisible = !errorElement.classList.contains('hidden');
 
         if (isClickInside && isErrorVisible) {
-            hideError();
+            toggleErrorMessageHiding++;
+
+            if (toggleErrorMessageHiding >= 2) {
+                hideError();
+                toggleErrorMessageHiding = 0;
+            }
+        } else {
+            toggleErrorMessageHiding = 0;
         }
     });
 
@@ -83,10 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 let error;
                 switch(json.error_code) {
                     case 1:
-                        error = "اسم المستخدم غير صالح، يجب أن يكون على الأقل مكوناً من 3 أحرف";
+                        error = "اسم المستخدم غير صالح، يجب أن يكون على الأقل مكوناً من 3 أحرف ولا يتجاوز 16 حرفاً";
                         break;
                     case 2:
-                        error = "كلمة المرور غير صالحة، يجب أن تكون على الأقل مكونةً من 3 أحرف";
+                        error = "كلمة المرور غير صالحة، يجب أن تكون على الأقل مكونةً من 3 أحرف ولا تتجاوز 16 حرفاًَ";
                         break;
                     case 3:
                         error = "التذكرة المحلية غير صالحة، هذه المشكلة لا علاقة لك بها لذلك تواصل معنا لحلها";

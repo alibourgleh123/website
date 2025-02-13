@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية</title>
+</head>
+<body>
+    <h1>معلومات الحساب</h1>
+    <p>اسم المستخدم: <span id="username">جاري التحميل...</span></p>
+    <p>الرتبة: <span id="role">جاري التحميل...</span></p>
+    <p>تاريخ إنشاء الحساب: <span id="creation_date">جاري التحميل...</span></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let username = document.getElementById('username');
+            let role = document.getElementById('role');
+            let creation_date = document.getElementById('creation_date');
+
+            const token = localStorage.getItem("access_token");
+            if (!token) {
+                username.textContent = "غير مسجل";
+                role.textContent = "غير متوفر";
+                creation_date.textContent = "غير متوفر";
+                return;
+            }
+
+            fetch('/getuserinfo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(user_info => {
+                username.textContent = user_info.username || "غير متوفر";
+                let stuff;
+                if (user_info.role == "Guest") stuff = "ضيف";
+                if (user_info.role == "Admin") stuff = "مشرف";
+                role.textContent = stuff || "غير متوفر";
+                creation_date.textContent = user_info.creation_date || "غير متوفر";
+            })
+            .catch(error => {
+                console.error("خطأ في جلب البيانات:", error);
+                username.textContent = "فشل في تحميل البيانات";
+                role.textContent = "فشل في تحميل البيانات";
+                creation_date.textContent = "فشل في تحميل البيانات";
+            });
+        });
+    </script>
+</body>
+</html>

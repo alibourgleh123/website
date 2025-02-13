@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مبادرة الأطباء المغتربين في مدينة التل</title>
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="title">
+                <h2 class="logo">مبادرة الأطباء المغتربين</h2>
+                <h4>في مدينة التل</h3>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav class="nav-links">
+                <a class="nav-link active" data-tab="home">الرئيسية</a>
+                <a class="nav-link" data-tab="about-dmo">عن عيادات DMO 1&2</a>
+                <a class="nav-link" data-tab="specialties" id="specialties-button">التخصصات</a>
+                <a class="nav-link" data-tab="doctors">المشاركين معنا بالمبادرة</a>
+                <a class="nav-link" data-tab="contact">اتصل بنا</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="home" class="tab-content active">
+            <section class="hero">
+                <h1>الرعاية الطبية للجميع</h1>
+                <p>مبادرة طبية تهدف لتوفير الرعاية الصحية بأسعار في متناول المرضى محدودي الدخل</p>
+                <button class="cta-button" id="bookButton" data-tab="specialties">احجز استشارتك الآن</button>
+            </section>
+
+            <section class="who-are-we">
+                <h2>من نحن؟</h2>
+                <p>نحن مجموعة من أبنائكم الأطباء الذين تغربنا عن بلدنا بسبب بطش النظام المخلوع،
+                    سنقوم بعمل مبادرة لخدمة أهالينا الأفاضل بفتح عيادات مجانية في القريب العاجل.
+                    تم الاتفاق مع مجمع عيادات 2&1 DMO لاستضافة الأطباء الراغبين بالانضمام المبادرة.
+                    وتم الاتفاق مع مستشفى لإجراء العمليات الجراحية بأقل تكلفة ممكنة.</p>
+            </section>
+            <h2 style="text-align: center; margin-top: 1rem;">مميزاتنا</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">👨‍⚕️</div>
+                        <h3>رعاية طبية شاملة</h3>
+                        <p>نقدم خدمات طبية متكاملة للمرضى محدودي الدخل</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>تكلفة منخفضة</h3>
+                        <p>علاج بأسعار في متناول الجميع دون المساس بالجودة</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏥</div>
+                        <h3>فريق طبي متميز</h3>
+                        <p>أطباء مغتربون مكرسون لخدمة المجتمع</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>خدمة راقية</h3>
+                        <p>نسعى دوماً لنقدم الأفضل الذي يليق بكم</p>
+                    </div>
+                </div>
+        </div>
+
+        <!-- About tab -->
+        <div id="about-dmo" class="tab-content">
+            <div class="feature-card">
+                <h2>ماهي عيادات DMO 1&2؟</h2>
+            </div>
+        </div>
+
+        <!-- Services tab -->
+        <div id="specialties" class="tab-content" style="min-height: 50rem;">
+            <center><h2 id="specialties-title">التخصصات المتوفرة لدينا</h2></center>
+            <center><button class="send-button" onclick="drawMainSpecialitiesMenu()" style="max-width: fit-content; margin-top: 2rem;" id="go-back"> ◀ الرجوع للخلف</button></center>
+            <div class="grid show" id="specialties-grid">
+                <!-- Elements here are fetched from specialties.json + contributors.json and added by javascript code -->
+            </div>
+        </div>
+
+        <!-- Doctors tab -->
+        <div id="doctors" class="tab-content">
+            <h1 style="text-align: center;">هذه قائمة مبدئية بالمشاركين معنا</h1>
+            <h3 style="text-align: center; color: gray;">والباب مفتوح أيضاً لمن أراد <a id="join-us" href="#" style="color: rgb(123, 165, 255);">الإنضمام لنا</a></h3>
+            <div class="dropdown-container" style="margin-top: 2rem;">
+                <center><button onclick="toggleDoctorsGrid()" class="dropdown-button" id="doctors-dropdown-button"> ◀ الأطباء</button></center>
+                <div class="grid" id="doctors-grid">
+                    <!-- Elements here are fetched from contributors.json and added by javascript code -->
+                </div>
+            </div>
+            <div class="dropdown-container">
+                <center><button onclick="toggleOthersGrid()" class="dropdown-button" id="others-dropdown-button"> ◀ المهندسون والفنيون</button></center>
+                <div class="grid" id="others-grid">
+                    <!-- Elements here are fetched from contributors.json and added by javascript code -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Dialog -->
+        <div id="popup" class="popup">
+            <div class="popup-content" id="popup-content">
+                <span class="close" id="closePopup">&times;</span>
+                <h1 id="dialog-name" style="margin-bottom: 0.2rem;"></h1>
+                <h3 id="dialog-job""></h3>
+                <h3 id="dialog-experience"></h3>
+                <p id="dialog-about" style="margin: 1rem 0;"></p>
+                <ul class="contact-list" id="contact-list"></ul>
+                <button class="send-button" id="popup-button">احجز موعداً</button>
+            </div>
+        </div>
+
+        <!-- Contact tab -->
+        <div id="contact" class="tab-content">
+            <div class="feature-card">
+                <h2>اتصل بنا</h2>
+                <p>هاتف: 123-456-789</p>
+                <p>البريد الإلكتروني: info@medical-initiative.com</p>
+                <p>العنوان: شارع الطب، المدينة الطبية</p>
+            </div>
+            <div class="feature-card no-hover" style="margin-top: 2rem;">
+                <h3>الإنضمام لنا</h3>
+                <input type="text" id="form-name" placeholder="أدخل اسمك ">
+                <p>أدخل مهنتك أو تخصصك</p>
+                <input type="text" id="form-job" placeholder="التخصص">
+                <p>أدخل طرق التواصل</p>
+                <input type="text" id="form-country" placeholder="بلد الإقامة">
+                <input type="text" id="form-phone-number" placeholder="رقم الجوال بالصيغة الدولية">
+                <input type="email" name="email" id="form-email" placeholder="البريد الإلكتروني">
+                <p>معلومات أخرى تحب أن تضيفها (يمكنك ترك هذا فارغاً)</p> 
+                <textarea type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
+                <button class="send-button" onclick="join_forum_sender()">إرسال</button>
+                <p style="color: gray; padding-top: 1rem;">ملاحظة: قد يستغرق الرد عليك 24 ساعة، لذلك تحلى بالصبر</p>
+                <div class="error-message hidden" id="error-message" role="alert">
+                    <span>أعاد الخادم خطأً</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 مبادرة الأطباء المغتربين في مدينة التل. جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

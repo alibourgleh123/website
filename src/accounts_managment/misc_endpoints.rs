@@ -1,16 +1,18 @@
+use crate::accounts_managment::get_user_info;
 use crate::accounts_managment::login::*;
 use crate::accounts_managment::get_database_connection;
 
-use actix_web::{get, HttpRequest, Responder, HttpResponse};
+use actix_web::{web, post, get, HttpRequest, Responder, HttpResponse};
+use serde::Deserialize;
 
-#[get("/ar/main.html")]
+#[get("/ar/main")]
 pub async fn main_handler(req: HttpRequest) -> impl Responder {
     let unauthed_access_page = r#"
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="1;url=/ar/login.html">
+        <meta http-equiv="refresh" content="0;url=/ar/login.html">
         <title>نعيد توجيهك...</title>
     </head>
     <body>
@@ -28,8 +30,19 @@ pub async fn main_handler(req: HttpRequest) -> impl Responder {
     if let Some(auth_cookie) = auth_cookie {
         match login_with_token(&connection, auth_cookie.value()) {
             Ok(result) => {
+                if check_if_admin(&connection, auth_cookie.value()).unwrap() {
+                    let path = "privileged_site/ar/admin.html";
+                    if std::path::Path::new(path).exists() {
+                        return HttpResponse::Ok()
+                            .body(std::fs::read_to_string(path).expect("admin.html not found"));
+                    } else {
+                        println!("admin.html not found!");
+                        return HttpResponse::InternalServerError().body("حدث خطأ بالخادم");
+                    }
+                }
+
                 if result {
-                    let path = "site/ar/main.html";
+                    let path = "privileged_site/ar/main.html";
                     if std::path::Path::new(path).exists() {
                         return HttpResponse::Ok()
                             .body(std::fs::read_to_string(path).expect("main.html not found"));
@@ -48,4 +61,17 @@ pub async fn main_handler(req: HttpRequest) -> impl Responder {
     } else {
         return HttpResponse::Unauthorized().body(unauthed_access_page);
     }
+}
+
+
+#[derive(Deserialize)]
+struct RegisterRequest {
+    token: String
+}
+
+#[post("/getuserinfo")]
+pub async fn get_user_info_endpoint(token: web::Json<RegisterRequest>) -> actix_web::Result<impl Responder>{
+    let connection = get_database_connection().expect("failed to get database connection");
+
+    Ok(HttpResponse::Ok().json(get_user_info(&connection, token.token.clone())))
 }

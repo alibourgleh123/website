@@ -6,6 +6,24 @@ use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 use serde::{Deserialize, Serialize};
 
+pub fn check_if_admin(connection: &Connection, token: &str) -> Result<bool> {
+    let mut statement = connection.prepare(
+        "SELECT EXISTS (
+            SELECT 1 
+            FROM accounts 
+            WHERE token = ?1 AND role = ?2
+        )",
+    )?;
+    
+    // Check if the account exists
+    let is_admin: bool = statement.query_row(
+        params![token, "Admin"],
+        |row| row.get(0),
+    )?;
+
+    Ok(is_admin)
+}
+
 pub fn login_with_token(connection: &Connection, token: &str) -> Result<bool> {
     let mut statement = connection.prepare(
         "SELECT EXISTS (
@@ -53,7 +71,7 @@ pub async fn login_endpoint(info: web::Json<LoginRequest>) -> actix_web::Result<
                     .finish();
 
                 return Ok(HttpResponse::Found()
-                    .append_header(("Location", "/ar/main.html"))
+                    .append_header(("Location", "/ar/main"))
                     .cookie(auth_cookie)
                     .finish());
             }
@@ -76,8 +94,7 @@ pub fn login(connection: &Connection, username: &str, password: &str, token: &st
     if crate::config::HASH_IMPORTANT_INFORMATION {
         /*
          * This proccess is very intensive on performance, but its neccesary because we are hashing and salting
-         * the user's password, which means that we need to itarate over every single account in the database and
-         * call verify() on it to verify the logins.
+         * the user's password.
          * I have benchmarked verify() function on my ryzen 5 5600 (12 threads 6 cores) cpu and managed to verify
          * 1000 strings in ~5.8 seconds with rayon's loops which we do use here, which is about ~172 strings per
          * second, good enough.
@@ -100,14 +117,13 @@ pub fn login(connection: &Connection, username: &str, password: &str, token: &st
                 return;
             }
 
-            // We will use nested if statements here so that we dont waste computational power verifying
-            // the password when the username is wrong, we cant use 'continue;' in rayon loops, Rayon is used here
-            // to split the verification proccess over all cpu cores, which significantly speeds it up
-            if verify(username, &account.username) {
-                if verify(password, &account.password) {
-                    let mut grant_access = grant_access.lock().unwrap();
-                    *grant_access = true;
-                }
+            if username != &account.username {
+                return;
+            }
+
+            if verify(password, &account.password) {
+                let mut grant_access = grant_access.lock().unwrap();
+                *grant_access = true;
             }
         });
 

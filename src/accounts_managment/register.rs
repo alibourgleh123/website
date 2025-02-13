@@ -1,8 +1,9 @@
 use crate::config::USE_HTTPS;
 
-use super::{get_database_connection, hash_account_details, Account};
+use super::{get_database_connection, hash_account_details, Account, Role};
 
 use actix_web::{cookie::Cookie, post, web, HttpResponse, Responder};
+use chrono::Local;
 use rusqlite::{params, Connection};
 use serde::{Deserialize, Serialize};
 
@@ -53,7 +54,7 @@ pub async fn register_endpoint(info: web::Json<RegisterRequest>) -> actix_web::R
                     .finish();
 
         return Ok(HttpResponse::Found()
-                .append_header(("Location", "/ar/main.html"))
+                .append_header(("Location", "/ar/main"))
                 .cookie(auth_cookie)
                 .finish());
     }
@@ -65,15 +66,15 @@ pub async fn register_endpoint(info: web::Json<RegisterRequest>) -> actix_web::R
 }
 
 pub fn register(connection: &Connection, username: &str, password: &str, token: &str) -> Result<(), RegistrationError> {
-    if username.chars().count() < 3 {
+    if username.chars().count() < 3 || username.chars().count() > 16 {
         return Err(RegistrationError::InvalidUsername);
     }
 
-    if username.chars().count() < 3 {
+    if username.chars().count() < 3 || username.chars().count() > 16 {
         return Err(RegistrationError::InvalidPassword);
     }
 
-    if token.chars().count() == 0 {
+    if token.chars().count() == 0 || token.chars().count() > 64 {
         return Err(RegistrationError::InvalidToken);
     }
 
@@ -105,9 +106,13 @@ pub fn register(connection: &Connection, username: &str, password: &str, token: 
         return Err(RegistrationError::UsernameAlreadyExists);
     }
 
+    // Get current time 
+    let now = Local::now();
+    let formatted_time = now.format("%Y/%m/%d %I:%M:%S %p").to_string();
+
     match connection.execute(
-        "INSERT INTO accounts (username, password, token, type) VALUES (?1, ?2, ?3, ?4)",
-        (account.username, account.password, token, "Guest"), // By default every account is a guest
+        "INSERT INTO accounts (username, password, token, role, creation_date) VALUES (?1, ?2, ?3, ?4, ?5)",
+        (account.username, account.password, token, Role::Guest.to_string(), formatted_time), // By default every account is a guest
     ) {
         Ok(_) => Ok(()),
         Err(_) => Err(RegistrationError::DatabaseError),
