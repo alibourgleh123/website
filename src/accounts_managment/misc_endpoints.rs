@@ -3,6 +3,7 @@ use crate::accounts_managment::login::*;
 use crate::accounts_managment::get_database_connection;
 
 use actix_web::{web, post, get, HttpRequest, Responder, HttpResponse};
+use rusqlite::Connection;
 use serde::Deserialize;
 
 #[get("/ar/main")]
@@ -22,7 +23,13 @@ pub async fn main_handler(req: HttpRequest) -> impl Responder {
     </html>
     "#.to_string();
 
-    let connection = get_database_connection().unwrap();
+    let connection: Connection = match get_database_connection() {
+        Ok(connection) => connection,
+        Err(e) => { 
+            eprintln!("We are the main_handler function, We have failed to get connection to the database! here is the error:\n{}", e);
+            return HttpResponse::InternalServerError().body("حدث خطأ بالخادم");
+        }
+    };
 
     // Extract the token from the cookie
     let auth_cookie = req.cookie("auth_token");
@@ -36,7 +43,7 @@ pub async fn main_handler(req: HttpRequest) -> impl Responder {
                         return HttpResponse::Ok()
                             .body(std::fs::read_to_string(path).expect("admin.html not found"));
                     } else {
-                        println!("admin.html not found!");
+                        eprintln!("admin.html not found!");
                         return HttpResponse::InternalServerError().body("حدث خطأ بالخادم");
                     }
                 }
@@ -47,7 +54,7 @@ pub async fn main_handler(req: HttpRequest) -> impl Responder {
                         return HttpResponse::Ok()
                             .body(std::fs::read_to_string(path).expect("main.html not found"));
                     } else {
-                        println!("main.html not found!");
+                        eprintln!("main.html not found!");
                         return HttpResponse::InternalServerError().body("حدث خطأ بالخادم");
                     }
                 } else {

@@ -32,7 +32,16 @@ struct RegisterResponse {
 
 #[post("/register")]
 pub async fn register_endpoint(info: web::Json<RegisterRequest>) -> actix_web::Result<impl Responder> {
-    let connection = get_database_connection().unwrap();
+    let connection = match get_database_connection() {
+        Ok(connection) => connection,
+        Err(e) => {
+            eprintln!("We are register_endpoint function, We have failed to get connection to the database! here is the error: {}", e);
+            return Ok(HttpResponse::InternalServerError().json(RegisterResponse {
+                server_returned_an_error: true,
+                error_code: 5,
+            }));
+        }
+    };
 
     let register_result = register(&connection, &info.username, &info.password, &info.token);
 
@@ -89,18 +98,30 @@ pub fn register(connection: &Connection, username: &str, password: &str, token: 
     }
 
     // Check if the username already exists
-    let mut statement = connection.prepare(
+    let mut statement = match connection.prepare(
         "SELECT EXISTS (
             SELECT 1 
             FROM accounts 
             WHERE username = ?1
         )",
-    ).unwrap();
+    ) {
+        Ok(statement) => statement,
+        Err(e) => { 
+            eprintln!("We are register function, We have failed to prepare the statement, here is the error:\n{}", e);
+            return Err(RegistrationError::DatabaseError);
+        }
+    };
     
-    let username_exists: bool = statement.query_row(
+    let username_exists: bool = match statement.query_row(
         params![username],
         |row| row.get(0),
-    ).unwrap();
+    ) {
+        Ok(username_exists) => username_exists,
+        Err(e) => { 
+            eprintln!("We are register function, We have failed to check if the username exists, here is the error:\n{}", e);
+            return Err(RegistrationError::DatabaseError);
+        }
+    };
 
     if username_exists {
         return Err(RegistrationError::UsernameAlreadyExists);

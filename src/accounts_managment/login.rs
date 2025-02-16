@@ -57,7 +57,16 @@ struct LoginResponse {
 
 #[post("/login")]
 pub async fn login_endpoint(info: web::Json<LoginRequest>) -> actix_web::Result<impl Responder> {
-    let connection = get_database_connection().unwrap();
+    let connection: Connection = match get_database_connection() {
+        Ok(connection) => connection,
+        Err(e) => { 
+            eprintln!("We are the login_endpoint function, We have failed to get connection to the database! here is the error:\n{}", e);
+            return Ok(HttpResponse::InternalServerError().json(LoginResponse {
+                access_granted: false,
+                server_returned_an_error: true,
+            }));
+        }
+    };
 
     let login = login(&connection, &info.username, &info.password, &info.token);
 

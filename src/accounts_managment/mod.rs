@@ -2,7 +2,7 @@ pub mod login;
 pub mod register;
 pub mod misc_endpoints;
 
-use std::process::exit;
+use std::{error::Error, process::exit, fmt::Display};
 
 use rusqlite::{Connection, Result};
 use argon2::{
@@ -12,7 +12,8 @@ use argon2::{
     },
     Argon2
 };
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
+
 
 #[derive(Debug)]
 pub struct Account {
@@ -47,9 +48,19 @@ pub struct UserInfo {
 }
 
 pub fn get_user_info(connection: &Connection, token: String) -> UserInfo {
-    // Use a parameterized query to prevent SQL injection
-    let mut statement = connection.prepare("SELECT username, role, creation_date FROM accounts WHERE token = ?")
-        .expect("Failed to prepare statement");
+    let mut statement = match connection.prepare("SELECT username, role, creation_date FROM accounts WHERE token = ?") {
+        Ok(statement) => statement,
+        Err(e) => {
+            eprintln!("We are the main_handler function, We have failed to prepare the statement, here is the error:\n{}", e);
+            // Default case if no user is found
+            return UserInfo {
+                user_exists: false,
+                username: "حدث خطأ بالخادم".to_string(),
+                role: "حرامي سيارات".to_string(),
+                creation_date: "ظظظ".to_string(),
+            };
+        }
+    };
 
     let user_info_iter = statement.query_map([&token], |row| {
         Ok(UserInfo {
@@ -67,7 +78,7 @@ pub fn get_user_info(connection: &Connection, token: String) -> UserInfo {
             }
         }
         Err(e) => {
-            eprintln!("Database error: {}", e);
+            eprintln!("We are the main_handler function, We have a database error: {}", e);
         }
     }
 
@@ -81,6 +92,7 @@ pub fn get_user_info(connection: &Connection, token: String) -> UserInfo {
 }
 
 pub fn init_database() {
+    // Crashing the program on error is fine here i guess
     let conn = Connection::open("accounts.db").expect("failed to open accounts.db");
 
     if conn.execute(
@@ -92,8 +104,7 @@ pub fn init_database() {
             role      TEXT NOT NULL,
             creation_date TEXT NOT NULL
         )",
-        (), // empty list of parameters.
-    ).is_err() {
+        ()).is_err() {
         println!("failed to create accounts table in the database, try to delete accounts.db file and rerun the program.");
         exit(-1);
     }
@@ -109,9 +120,23 @@ pub fn init_database() {
             more          TEXT NOT NULL,
             time          TEXT NOT NULL
         )",
-        (), // empty list of parameters.
-    ).is_err() {
+        ()).is_err() {
         println!("failed to create form table in the database, try to delete accounts.db file and rerun the program.");
+        exit(-1);
+    }
+
+    if conn.execute("
+    CREATE TABLE IF NOT EXISTS consultations (
+        id    INTEGER PRIMARY KEY,
+        targeted_doctor TEXT NOT NULL,
+        name TEXT NOT NULL,
+        sur_name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        phone_number TEXT NOT NULL,
+        issue TEXT NOT NULL,
+        uuid TEXT NOT NULL
+    )", ()).is_err() {
+        println!("failed to create consultations table in the database, try to delete accounts.db file and rerun the program.");
         exit(-1);
     }
 }

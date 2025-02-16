@@ -113,7 +113,7 @@ footer {
 }
 
 /* Responsive design */
-@media (max-width: 950px) {
+@media (max-width: 1200px) {
     .mobile-menu-btn {
         display: block;
     }

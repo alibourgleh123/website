@@ -1,6 +1,7 @@
 mod accounts_managment;
 mod config;
 mod join_form_handler;
+mod consultations_handler;
 
 use accounts_managment::misc_endpoints::get_user_info_endpoint;
 use accounts_managment::register::register_endpoint;
@@ -12,7 +13,7 @@ use env_logger::Env;
 use colorize::*;
 
 use accounts_managment::{misc_endpoints::main_handler, init_database, login::login_endpoint};
-use join_form_handler::form::{get_forms_endpoint, join_form_endpoint};
+use join_form_handler::{get_forms_endpoint, join_form_endpoint};
 
 async fn invalid_path_handler() -> impl Responder {
     "invalid link

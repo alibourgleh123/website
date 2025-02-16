@@ -35,8 +35,8 @@ document.addEventListener("click", function (event) {
 
 function disableScroll() {
   // Get the current page scroll position
-  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  (scrollLeft = window.pageXOffset || document.documentElement.scrollLeft),
+  scrollTop = window.scrollY || document.documentElement.scrollTop;
+  (scrollLeft = window.scrollX || document.documentElement.scrollLeft),
     // if any scroll is attempted,
     // set this to the previous value
     (window.onscroll = function () {
@@ -46,6 +46,51 @@ function disableScroll() {
 
 function enableScroll() {
   window.onscroll = function () {};
+}
+
+function showConsultationPopup(doctorName) {
+  document.getElementById("dialog-name").innerHTML = "";
+  document.getElementById("dialog-job").innerHTML = "";
+  document.getElementById("dialog-experience").innerHTML = "";
+  document.getElementById("dialog-about").innerHTML = "";
+  document.getElementById("contact-list").innerHTML = "";
+  document.getElementById("popup").style.display = "flex";
+  document.getElementById("popup-button").style.display = "none";
+  document.getElementById("closePopup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+  });
+  disableScroll();
+  document.getElementById("popup-content").innerHTML = `
+        <h2>احجز استشارة</h2>
+        <form id="join-us-form" class="form">
+            <div class="form-group
+                <label for="form-name">اسمك الأول</label>
+                <input type="text" id="form-name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="form-surname">اسم العائلة</label>
+                <input type="text" id="form-surname" name="surname" required>
+            </div>
+            <h3>وسائل التواصل معك</h3>
+            <div class="form-group">
+                <label for="form-phone-number">رقم الهاتف</label>
+                <input type="tel" id="form-phone-number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="form-email">البريد الإلكتروني</label>
+                <input type="email" id="form-email" name="email" required>
+            </div>
+            <div class="form-group">
+            
+
+
+
+
+
+
+
+
+                `
 }
 
 function showPopup(title, subtitle) {
@@ -222,6 +267,8 @@ function addSpeciality(specality) {
       document.getElementById("specialties-title").innerText = "أقسام الجراحة";
       const div = document.createElement("div");
       div.classList.add("card");
+      div.style.borderRadius = "16px";
+      div.style.flex = "0 1 180px";
 
       div.addEventListener("click", () => {
         bringUsBackToTheSubList = true;
@@ -238,11 +285,11 @@ function addSpeciality(specality) {
       let style;
       if (sub_speciality.icon.includes("svg")) {
         style =
-          "filter: invert(100%) brightness(100%); width: 10rem; height: fit-content;";
+          "filter: invert(80%) brightness(100%); margin-top: 1rem;";
       }
-      div.innerHTML = `<center><img src=\"../images/icons/${sub_speciality.icon}\" alt=\"\" style="${style}"></center>
+      div.innerHTML = `<center><img src=\"../images/icons/${sub_speciality.icon}\" alt=\"\" style="width: 8rem; height: fit-content; ${style}"></center>
                             <div class=\"card-content\">
-                                <h3>${sub_speciality.name}</h3>
+                                <h2>${sub_speciality.name}</h2>
                             </div>`;
       document.getElementById("specialties-grid").appendChild(div);
     });
@@ -251,6 +298,8 @@ function addSpeciality(specality) {
   } else {
     const div = document.createElement("div");
     div.classList.add("card");
+    div.style.borderRadius = "16px";
+    div.style.flex = "0 1 180px";
 
     div.addEventListener("click", () => {
       if (specality.use_sublist) {
@@ -274,11 +323,11 @@ function addSpeciality(specality) {
     let style;
     if (specality.icon.includes("svg")) {
       style =
-        "filter: invert(100%) brightness(100%); width: 10rem; height: fit-content;";
+        "filter: invert(80%) brightness(100%); margin-top: 1rem;";
     }
-    div.innerHTML = `<center><img src=\"../images/icons/${specality.icon}\" alt=\"\" style="${style}"></center>
-                        <div class=\"card-content\">
-                            <h3>${specality.name}</h3>
+    div.innerHTML = `<center><img src=\"../images/icons/${specality.icon}\" alt=\"\" style="width: 8rem; height: fit-content;  ${style}"></center>
+                        <div class=\"card-content\" style="">
+                            <h2>${specality.name}</h2>
                         </div>`;
     document.getElementById("specialties-grid").appendChild(div);
   }
@@ -461,6 +510,10 @@ tabButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const tabId = button.dataset.tab;
 
+    if (tabId == "dont-switch") {
+      return;
+    }
+
     tabButtons.forEach((btn) => btn.classList.remove("active"));
     tabContents.forEach((content) => content.classList.remove("active"));
 
@@ -490,15 +543,14 @@ const sections = document.querySelectorAll("section");
 
 navItems.forEach((item) => {
   item.addEventListener("click", (e) => {
+    if (item.dataset.tab == "dont-switch") {
+      return;
+    }
+
     e.preventDefault();
-    const targetId = item.getAttribute("href").substring(1);
 
     navItems.forEach((nav) => nav.classList.remove("active"));
     item.classList.add("active");
-
-    document.getElementById(targetId).scrollIntoView({
-      behavior: "smooth",
-    });
 
     // Close mobile menu after clicking
     if (window.innerWidth <= 768) {

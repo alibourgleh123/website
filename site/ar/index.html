@@ -20,6 +20,7 @@
                 <a class="nav-link" data-tab="specialties" id="specialties-button">التخصصات</a>
                 <a class="nav-link" data-tab="doctors">المشاركين معنا بالمبادرة</a>
                 <a class="nav-link" data-tab="contact">اتصل بنا</a>
+                <a class="nav-link" data-tab="dont-switch" onclick="window.location.href='login.html'">تسجيل الدخول</a>
             </nav>
         </div>
     </header>
@@ -102,12 +103,12 @@
         <div id="popup" class="popup">
             <div class="popup-content" id="popup-content">
                 <span class="close" id="closePopup">&times;</span>
-                <h1 id="dialog-name" style="margin-bottom: 0.2rem;"></h1>
-                <h3 id="dialog-job""></h3>
-                <h3 id="dialog-experience"></h3>
-                <p id="dialog-about" style="margin: 1rem 0;"></p>
+                <h2 id="dialog-name" style="margin-bottom: 0.2rem;"></h2>
+                <h3 id="dialog-job" style="color: gray;"></h3>
+                <h3 id="dialog-experience" style="color: gray;"></h3>
+                <p id="dialog-about" style="margin: 1rem 0;" style="color: gray;"></p>
                 <ul class="contact-list" id="contact-list"></ul>
-                <button class="send-button" id="popup-button">احجز موعداً</button>
+                <button class="send-button" id="popup-button">اطلب إستشارة</button>
             </div>
         </div>
 
@@ -120,21 +121,23 @@
                 <p>العنوان: شارع الطب، المدينة الطبية</p>
             </div>
             <div class="feature-card no-hover" style="margin-top: 2rem;">
-                <h3>الإنضمام لنا</h3>
-                <input type="text" id="form-name" placeholder="أدخل اسمك ">
-                <p>أدخل مهنتك أو تخصصك</p>
-                <input type="text" id="form-job" placeholder="التخصص">
-                <p>أدخل طرق التواصل</p>
-                <input type="text" id="form-country" placeholder="بلد الإقامة">
-                <input type="text" id="form-phone-number" placeholder="رقم الجوال بالصيغة الدولية">
-                <input type="email" name="email" id="form-email" placeholder="البريد الإلكتروني">
-                <p>معلومات أخرى تحب أن تضيفها (يمكنك ترك هذا فارغاً)</p> 
-                <textarea type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
-                <button class="send-button" onclick="join_forum_sender()">إرسال</button>
-                <p style="color: gray; padding-top: 1rem;">ملاحظة: قد يستغرق الرد عليك 24 ساعة، لذلك تحلى بالصبر</p>
-                <div class="error-message hidden" id="error-message" role="alert">
-                    <span>أعاد الخادم خطأً</span>
-                </div>
+                <form onsubmit="event.preventDefault(); join_forum_sender()">
+                    <h3>الإنضمام لنا</h3>
+                    <input type="text" id="form-name" placeholder="أدخل اسمك " required>
+                    <p>أدخل مهنتك أو تخصصك</p>
+                    <input type="text" id="form-job" placeholder="التخصص" required>
+                    <p>أدخل طرق التواصل</p>
+                    <input type="text" id="form-country" placeholder="بلد الإقامة" required>
+                    <input type="text" id="form-phone-number" placeholder="رقم الجوال بالصيغة الدولية" required>
+                    <input type="email" name="email" id="form-email" placeholder="البريد الإلكتروني" required>
+                    <p>معلومات أخرى تحب أن تضيفها (يمكنك ترك هذا فارغاً)</p> 
+                    <textarea type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
+                    <input type="submit" value="إرسال"  class="send-button" style="background-color: var(--accent)">
+                    <p style="color: gray; padding-top: 1rem;">ملاحظة: قد يستغرق الرد عليك 24 ساعة، لذلك تحلى بالصبر</p>
+                    <div class="error-message hidden" id="error-message" role="alert">
+                        <span>أعاد الخادم خطأً</span>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
