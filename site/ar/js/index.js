@@ -1,4 +1,139 @@
+// The consultation form error handlers
+function showConsultationError(message) {
+  const errorElement = document.getElementById("consultation-error-message");
+  const errorSpan = errorElement.querySelector("span");
+  errorSpan.textContent = message;
+  errorElement.classList.remove("hidden");
+}
+
+function hideConsultationError() {
+  const errorElement = document.getElementById("consultation-error-message");
+  errorElement.classList.add("hidden");
+}
+
+function showConsultationInfo(message) {
+  document.getElementById('consultation-info-message-span').textContent = message;
+  document.getElementById('consultation-info-message').classList.remove("hidden");
+}
+
+function hideConsultationInfo(message) {
+  document.getElementById('consultation-info-message').classList.add("hidden");
+}
+
+let consultationFilesUploadFailed = false;
+
+async function sendConsultationRequest() {
+    let uuid = "";
+    let fetch_returned_an_error = false;
+
+    await fetch("/send_consultation", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            targeted_doctor: doctorNameVar,
+            name: document.getElementById("consultation-patients-name").value,
+            sur_name: document.getElementById("consultation-patients-surname").value,
+            email: document.getElementById("consultation-patients-email").value,
+            phone_number: document.getElementById("consultation-patients-phone-number").value,
+            issue: document.getElementById("consultation-patients-issue").value,
+        }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                fetch_returned_an_error = true;
+            }
+            return response.json();
+        })
+        .then((response) => {
+            if (fetch_returned_an_error) {
+                showConsultationError(response.error);
+                return;
+            }
+            uuid = response.uuid;
+            
+            if (uuid) {
+                uploadConsultationFiles(uuid);
+            }
+
+            if (consultationFilesUploadFailed) {
+                showConsultationError("فشلت عملية رفع ملفاتك");
+                consultationFilesUploadFailed = false;
+            } else {
+                showConsultationInfo("تم إرسال طلبك بنجاح، سيتم التواصل والتنسيق معك عن طريق طرق التواصل التي وضعتها");
+            }
+        })
+        .catch((error) => {
+            showConsultationError(error);
+        });
+}
+
+function uploadConsultationFiles(uuid) {
+    const files = document.getElementById("ConsultationFiles").files;
+
+    if (files.length === 0) {
+        return;
+    }
+
+    document.getElementById("progressContainer").innerHTML = "";
+
+    Array.from(files).forEach((file, index) => {
+        uploadSingleFile(file, index, uuid);
+    });
+}
+
+function uploadSingleFile(file, index, uuid) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const progressBar = document.createElement("progress");
+    progressBar.value = 0;
+    progressBar.max = 100;
+    progressBar.id = `progress-${index}`;
+
+    const statusText = document.createElement("span");
+    statusText.id = `status-${index}`;
+    statusText.innerText = `يتم رفع ${file.name}...`;
+
+    document.getElementById("progressContainer").appendChild(statusText);
+    document.getElementById("progressContainer").appendChild(progressBar);
+    document.getElementById("progressContainer").appendChild(document.createElement("br"));
+
+    fetch(`/uploadconsultationfile?filename=${encodeURIComponent(file.name)}&uuid=${encodeURIComponent(uuid)}`, {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        })
+        .then(() => {
+            document.getElementById(`status-${index}`).innerText = `✅ تم رفع: ${file.name}  `;
+        })
+        .catch((error) => {
+            document.getElementById(`status-${index}`).innerText = `❌ فشل رفع: ${file.name}  `;
+            consultationFilesUploadFailed = true;
+            console.error("Error:", error);
+        });
+
+    // Simulate progress update
+    simulateProgress(progressBar);
+}
+
+function simulateProgress(progressBar) {
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10;
+        progressBar.value = progress;
+        if (progress >= 100) clearInterval(interval);
+    }, 300);
+}
+
+
 // The form errors handlers
+// too lazy to rename it
 function showError(message) {
   const errorElement = document.getElementById("error-message");
   const errorSpan = errorElement.querySelector("span");
@@ -34,69 +169,34 @@ document.addEventListener("click", function (event) {
 });
 
 function disableScroll() {
-  // Get the current page scroll position
-  scrollTop = window.scrollY || document.documentElement.scrollTop;
-  (scrollLeft = window.scrollX || document.documentElement.scrollLeft),
-    // if any scroll is attempted,
-    // set this to the previous value
-    (window.onscroll = function () {
-      window.scrollTo(scrollLeft, scrollTop);
-    });
+  document.body.style.overflowY = "hidden"; // Prevents page scrolling
 }
 
 function enableScroll() {
-  window.onscroll = function () {};
+  document.body.style.overflowY = ""; // Restores scrolling
 }
 
-function showConsultationPopup(doctorName) {
-  document.getElementById("dialog-name").innerHTML = "";
-  document.getElementById("dialog-job").innerHTML = "";
-  document.getElementById("dialog-experience").innerHTML = "";
-  document.getElementById("dialog-about").innerHTML = "";
-  document.getElementById("contact-list").innerHTML = "";
-  document.getElementById("popup").style.display = "flex";
-  document.getElementById("popup-button").style.display = "none";
-  document.getElementById("closePopup").addEventListener("click", function () {
-    document.getElementById("popup").style.display = "none";
+let doctorNameVar = "";
+
+function showConsultationPopup() {
+  document.getElementById("consultation-popup").style.display = "flex";
+  document.getElementById('consultation-doctor-name').innerText = `عند ${doctorNameVar}`;
+  document.getElementById("closeConsultationPopup").addEventListener("click", function () {
+    document.getElementById("consultation-popup").style.display = "none";
   });
   disableScroll();
-  document.getElementById("popup-content").innerHTML = `
-        <h2>احجز استشارة</h2>
-        <form id="join-us-form" class="form">
-            <div class="form-group
-                <label for="form-name">اسمك الأول</label>
-                <input type="text" id="form-name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="form-surname">اسم العائلة</label>
-                <input type="text" id="form-surname" name="surname" required>
-            </div>
-            <h3>وسائل التواصل معك</h3>
-            <div class="form-group">
-                <label for="form-phone-number">رقم الهاتف</label>
-                <input type="tel" id="form-phone-number" name="phone_number" required>
-            </div>
-            <div class="form-group">
-                <label for="form-email">البريد الإلكتروني</label>
-                <input type="email" id="form-email" name="email" required>
-            </div>
-            <div class="form-group">
-            
+}
 
+function handleConsultation() { 
+  doctorNameVar = document.getElementById("dialog-name").innerText;
 
-
-
-
-
-
-
-                `
+  document.getElementById("popup").style.display = "none";
+  showConsultationPopup();
 }
 
 function showPopup(title, subtitle) {
   document.getElementById("dialog-name").innerText = title;
   document.getElementById("dialog-job").innerText = subtitle;
-  document.getElementById("dialog-experience").innerText = "";
   document.getElementById("dialog-about").innerText = "";
   document.getElementById("contact-list").innerHTML = "";
   document.getElementById("popup").style.display = "flex";
@@ -110,8 +210,10 @@ function showPopup(title, subtitle) {
 // Close when clicking outside the popup content
 window.addEventListener("click", function (event) {
   let popup = document.getElementById("popup");
-  if (event.target === popup) {
+  let consultationPopup = document.getElementById("consultation-popup");
+  if (event.target === popup || event.target === consultationPopup) {
     popup.style.display = "none";
+    consultationPopup.style.display = "none";
     document.getElementById("contact-list").innerHTML = "";
     enableScroll();
   }
@@ -146,6 +248,7 @@ function join_forum_sender() {
       }
     })
     .catch((error) => {
+      console.log(error);
       showError(error);
     });
 }
@@ -223,9 +326,6 @@ function addDoctors(specality) {
           div.addEventListener("click", () => {
             document.getElementById("dialog-name").innerText = doctor.name;
             document.getElementById("dialog-job").innerText = doctor.job;
-            document.getElementById(
-              "dialog-experience"
-            ).innerText = `سنوات الخبرة: ${doctor.experience_years} سنة`;
             document.getElementById("dialog-about").innerText = doctor.about;
             doctor.contact.forEach((contct) => {
               drawContact(contct, "contact-list");
@@ -372,9 +472,6 @@ fetch("contributors.json")
         div.addEventListener("click", () => {
           document.getElementById("dialog-name").innerText = doctor.name;
           document.getElementById("dialog-job").innerText = doctor.job;
-          document.getElementById(
-            "dialog-experience"
-          ).innerText = `سنوات الخبرة: ${doctor.experience_years} سنة`;
           document.getElementById("dialog-about").innerText = doctor.about;
           doctor.contact.forEach((contct) => {
             drawContact(contct, "contact-list");
@@ -401,9 +498,6 @@ fetch("contributors.json")
         div.addEventListener("click", () => {
           document.getElementById("dialog-name").innerText = other.name;
           document.getElementById("dialog-job").innerText = other.job;
-          document.getElementById(
-            "dialog-experience"
-          ).innerText = `سنوات الخبرة: ${other.experience_years} سنة`;
           document.getElementById("dialog-about").innerText = other.about;
           other.contact.forEach((contct) => {
             drawContact(contct, "contact-list");

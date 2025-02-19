@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مبادرة الأطباء المغتربين في مدينة التل</title>
+    <title>مبادرة الأطباء المغتربين في دمشق وريفها</title>
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header class="header">
         <div class="nav-container">
             <div class="title">
                 <h2 class="logo">مبادرة الأطباء المغتربين</h2>
-                <h4>في مدينة التل</h3>
+                <h4>في دمشق وريفها</h3>
             </div>
             <button class="mobile-menu-btn">☰</button>
             <nav class="nav-links">
                 <a class="nav-link active" data-tab="home">الرئيسية</a>
-                <a class="nav-link" data-tab="about-dmo">عن عيادات DMO 1&2</a>
                 <a class="nav-link" data-tab="specialties" id="specialties-button">التخصصات</a>
                 <a class="nav-link" data-tab="doctors">المشاركين معنا بالمبادرة</a>
                 <a class="nav-link" data-tab="contact">اتصل بنا</a>
@@ -35,10 +35,17 @@
 
             <section class="who-are-we">
                 <h2>من نحن؟</h2>
-                <p>نحن مجموعة من أبنائكم الأطباء الذين تغربنا عن بلدنا بسبب بطش النظام المخلوع،
-                    سنقوم بعمل مبادرة لخدمة أهالينا الأفاضل بفتح عيادات مجانية في القريب العاجل.
-                    تم الاتفاق مع مجمع عيادات 2&1 DMO لاستضافة الأطباء الراغبين بالانضمام المبادرة.
-                    وتم الاتفاق مع مستشفى لإجراء العمليات الجراحية بأقل تكلفة ممكنة.</p>
+                <p>نحن مجموعة من أبنائكم الأطباء المغتربين، 
+                    أنعم الله علينا واكتسبنا أحدث المهارات في
+                    كافة الفروع الطبية، ونرغب بوضع خبرتنا في
+                    خدمة سوريا الحرة. (مركز المبادرة مدينة دمشق
+                    وريفها و نسعى لتوسيعها لتشمل جميع محافظات
+                    سوريا) سنقوم بمبادرة لخدمة أهالينا الأفاضل بفتح
+                    عيادات مجانية في مدينة دمشق وريفها؛ تم الاتفاق
+                    مع مجمع عيادات 2&1 DMO لاستضافة الأطباء
+                    الراغبين بالانضمام المبادرة. وتم الاتفاق مع عدة
+                    مستشفيات لإجراء العمليات الجراحية بأقل تكلفة ممكنة.
+                </p>
             </section>
             <h2 style="text-align: center; margin-top: 1rem;">مميزاتنا</h2>
                 <div class="features">
@@ -63,13 +70,6 @@
                         <p>نسعى دوماً لنقدم الأفضل الذي يليق بكم</p>
                     </div>
                 </div>
-        </div>
-
-        <!-- About tab -->
-        <div id="about-dmo" class="tab-content">
-            <div class="feature-card">
-                <h2>ماهي عيادات DMO 1&2؟</h2>
-            </div>
         </div>
 
         <!-- Services tab -->
@@ -105,33 +105,63 @@
                 <span class="close" id="closePopup">&times;</span>
                 <h2 id="dialog-name" style="margin-bottom: 0.2rem;"></h2>
                 <h3 id="dialog-job" style="color: gray;"></h3>
-                <h3 id="dialog-experience" style="color: gray;"></h3>
                 <p id="dialog-about" style="margin: 1rem 0;" style="color: gray;"></p>
                 <ul class="contact-list" id="contact-list"></ul>
-                <button class="send-button" id="popup-button">اطلب إستشارة</button>
+                <button class="send-button" id="popup-button" onclick="handleConsultation()">اطلب إستشارة</button>
+            </div>
+        </div>
+
+        <!-- Consultation form -->
+        <div id="consultation-popup" class="popup">
+            <div class="popup-content" id="popup-content">
+                <span class="close" id="closeConsultationPopup">&times;</span>
+                <h2>احجز استشارة</h2>
+                <p id="consultation-doctor-name" style="color: gray;"></p>
+                <form onsubmit="event.preventDefault(); sendConsultationRequest()">
+                    <input class="input textfield" type="text" id="consultation-patients-name" placeholder="أدخل اسمك الأول" required>
+                    <input class="input textfield" type="text" id="consultation-patients-surname" placeholder="أدخل اسم العائلة" required>
+                    <p>أدخل طرق التواصل</p>
+                    <input class="input textfield" type="tel" name="phone" id="consultation-patients-phone-number" placeholder="رقم الجوال بالصيغة الدولية" required>
+                    <input class="input textfield" type="email" name="email" id="consultation-patients-email" placeholder="البريد الإلكتروني" required>
+                    <p>اكتب ماهي مشكلتك (الأعراض التي تعاني منها، الأدوية التي تتناولها حالياً إن وجدت، متى بدأت المشكلة)</p>
+                    <textarea class="input" type="text" id="consultation-patients-issue" style="height: 8rem; padding-right: 0.5rem;" placeholder="اكتب مشكلتك هنا" required></textarea>
+                    <p>ضع هنا تحاليلاً أو صور أشعة أو صوراً توضح مشكلتك إن وجدت هذه الصور (يمكنك ترك هذا فارغاً)</p>
+                    <input style="margin-top: 0.5rem;" type="file" id="ConsultationFiles" name="files[]" multiple>
+                    <div style="display: flex; align-items: center; gap: 0.75rem; width: 100%; max-width: fit-content; margin: auto 0.5rem;">
+                        <div id="progressContainer"></div>
+                        <div id="status" style="display: block;"></div>
+                    </div>
+                    <div class="info-message hidden" id="consultation-info-message" role="alert" style="margin: 1rem auto;">
+                        <span id="consultation-info-message-span"></span>
+                    </div>
+                    <input type="submit" value="إرسال"  class="send-button" style="background-color: var(--accent)">
+                    <div class="error-message hidden" id="consultation-error-message" role="alert">
+                        <span>أعاد الخادم خطأً</span>
+                    </div>    
+                </form>
             </div>
         </div>
 
         <!-- Contact tab -->
         <div id="contact" class="tab-content">
-            <div class="feature-card">
+            <div class="feature-card no-hover">
                 <h2>اتصل بنا</h2>
-                <p>هاتف: 123-456-789</p>
-                <p>البريد الإلكتروني: info@medical-initiative.com</p>
-                <p>العنوان: شارع الطب، المدينة الطبية</p>
+                <p>هاتف: 0598610095 +966 (واتساب فقط)</p>
+                <p>البريد الإلكتروني: syriandoctorsinitiative@gmail.com</p>
+                <p>العنوان: دمشق وريفها</p>
             </div>
             <div class="feature-card no-hover" style="margin-top: 2rem;">
                 <form onsubmit="event.preventDefault(); join_forum_sender()">
                     <h3>الإنضمام لنا</h3>
-                    <input type="text" id="form-name" placeholder="أدخل اسمك " required>
+                    <input class="input textfield" type="text" id="form-name" placeholder="أدخل اسمك " required>
                     <p>أدخل مهنتك أو تخصصك</p>
-                    <input type="text" id="form-job" placeholder="التخصص" required>
+                    <input class="input textfield" type="text" id="form-job" placeholder="التخصص" required>
                     <p>أدخل طرق التواصل</p>
-                    <input type="text" id="form-country" placeholder="بلد الإقامة" required>
-                    <input type="text" id="form-phone-number" placeholder="رقم الجوال بالصيغة الدولية" required>
-                    <input type="email" name="email" id="form-email" placeholder="البريد الإلكتروني" required>
+                    <input class="input textfield" type="text" id="form-country" placeholder="بلد الإقامة" required>
+                    <input class="input textfield" type="tel" name="phone" id="form-phone-number" placeholder="رقم الجوال بالصيغة الدولية" required>
+                    <input class="input textfield" type="email" name="email" id="form-email" placeholder="البريد الإلكتروني" required>
                     <p>معلومات أخرى تحب أن تضيفها (يمكنك ترك هذا فارغاً)</p> 
-                    <textarea type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
+                    <textarea class="input" type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
                     <input type="submit" value="إرسال"  class="send-button" style="background-color: var(--accent)">
                     <p style="color: gray; padding-top: 1rem;">ملاحظة: قد يستغرق الرد عليك 24 ساعة، لذلك تحلى بالصبر</p>
                     <div class="error-message hidden" id="error-message" role="alert">

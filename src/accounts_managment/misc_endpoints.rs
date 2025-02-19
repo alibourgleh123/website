@@ -1,6 +1,6 @@
 use crate::accounts_managment::get_user_info;
 use crate::accounts_managment::login::*;
-use crate::accounts_managment::get_database_connection;
+use crate::database::get_database_connection;
 
 use actix_web::{web, post, get, HttpRequest, Responder, HttpResponse};
 use rusqlite::Connection;

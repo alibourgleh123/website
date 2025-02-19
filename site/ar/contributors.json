@@ -6,8 +6,6 @@
                     "name": "الدكتور صفوان برغلة",
                     "image": "safwan.webp",
                     "job": "اخصائي جراحة عظام",
-                    "experience_years": "25",
-                    "residence": "المملكة العربية السعودية",
                     "about": "الدكتور صفوان برغلة أخصائي جراحة عظام تخرج من جامعة حلب، وحصل على الماجستير من جامعة دمشق، وحاز على الدكتوراة من رومانيا، حالياً يقيم في حوطة سدير في المملكة العربية السعودية.",
                     "contact": [
                         {
@@ -28,8 +26,6 @@
                     "name": "الدكتور أحمد السوادي",
                     "image": "doctor.webp",
                     "job": "الأمراض الوراثية و الخلايا الجذعية",
-                    "experience_years": "22",
-                    "residence": "فرنسا",
                     "about": "",
                     "contact": [
                     ]
@@ -38,8 +34,6 @@
                     "name": "الدكتور موفق حجازي",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض قلب أطفال",
-                    "experience_years": "5",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -48,8 +42,6 @@
                     "name": "الدكتور ماهر مصطفى فطوم",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أوعية",
-                    "experience_years": "21",
-                    "residence": "المانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -58,8 +50,6 @@
                     "name": "الدكتور مازن مسعود سليمان خالد",
                     "image": "doctor.webp",
                     "job": "جراحة عامة",
-                    "experience_years": "14",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -68,8 +58,6 @@
                     "name": "الدكتور أحمد محمد السويد",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أطفال وجراحة بولية عند الأطفال بالمنظار",
-                    "experience_years": "13",
-                    "residence": "الإمارات العربية المتحدة",
                     "about": "",
                     "contact": [
                     ]
@@ -78,8 +66,6 @@
                     "name": "الدكتور زياد محمد السحلي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أوعية",
-                    "experience_years": "11",
-                    "residence": "مصر",
                     "about": "",
                     "contact": [
                     ]
@@ -88,8 +74,6 @@
                     "name": "الدكتور أمجد محي الدين زينية",
                     "image": "doctor.webp",
                     "job": "استشاري أمراض جهاز الهضم",
-                    "experience_years": "15",
-                    "residence": "مصر",
                     "about": "",
                     "contact": [
                     ]
@@ -98,8 +82,6 @@
                     "name": "الدكتور عادل أحمد سعدي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عظمية",
-                    "experience_years": "20",
-                    "residence": "المانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -108,8 +90,6 @@
                     "name": "الدكتور كنان أحمد فريد دهني",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عظمية",
-                    "experience_years": "23",
-                    "residence": "بريطانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -118,8 +98,6 @@
                     "name": "الدكتور حازم محمد شحادة خوت",
                     "image": "doctor.webp",
                     "job": "استشاري جراحة ثدي ترميمية",
-                    "experience_years": "19",
-                    "residence": "بريطانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -128,8 +106,6 @@
                     "name": "الدكتور آيات مصطفى سكري",
                     "image": "doctor.webp",
                     "job": "جراحة عامة",
-                    "experience_years": "12",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -138,8 +114,6 @@
                     "name": "الدكتور فراس سلعس",
                     "image": "doctor.webp",
                     "job": "إستشاري تقويم أسنان",
-                    "experience_years": "6",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -148,8 +122,6 @@
                     "name": "الدكتور عزة خنجر",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عصبية",
-                    "experience_years": "7",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -158,8 +130,6 @@
                     "name": "الدكتور محمود حجازي",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض الأطفال",
-                    "experience_years": "8",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -168,8 +138,6 @@
                     "name": "الدكتور باسم خروس",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض الأطفال",
-                    "experience_years": "9",
-                    "residence": "بريطانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -178,8 +146,6 @@
                     "name": "الدكتور مأمون كريز",
                     "image": "doctor.webp",
                     "job": "أخصائي جراحة بولية",
-                    "experience_years": "21",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -188,8 +154,6 @@
                     "name": "الدكتور بهاء خنجر",
                     "image": "doctor.webp",
                     "job": "أخصائي جراحة بولية",
-                    "experience_years": "22",
-                    "residence": "ليبيا",
                     "about": "",
                     "contact": [
                     ]
@@ -198,8 +162,6 @@
                     "name": "الدكتور عبد الغني حجازي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عظمية",
-                    "experience_years": "23",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -208,8 +170,6 @@
                     "name": "الدكتور يوسف عبد العزيز الورد",
                     "image": "doctor.webp",
                     "job": "إستشاري طب أسرة",
-                    "experience_years": "14",
-                    "residence": "فرنسا",
                     "about": "",
                     "contact": [
                     ]
@@ -218,8 +178,6 @@
                     "name": "الدكتور أنس عفا الرفاعي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عصبية",
-                    "experience_years": "15",
-                    "residence": "السويد",
                     "about": "",
                     "contact": [
                     ]
@@ -228,8 +186,6 @@
                     "name": "الدكتور تيسير جاموس",
                     "image": "doctor.webp",
                     "job": "إستشاري عيون",
-                    "experience_years": "13",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -238,8 +194,6 @@
                     "name": "الدكتور أحمد السحلي",
                     "image": "doctor.webp",
                     "job": "إستشاري أنف وأذن وحنجرة",
-                    "experience_years": "18",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -248,8 +202,6 @@
                     "name": "الدكتور نزار المدني",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عامة وتنظيرية",
-                    "experience_years": "10",
-                    "residence": "الشمال السوري",
                     "about": "",
                     "contact": [
                     ]
@@ -258,8 +210,6 @@
                     "name": "الدكتور حسام بيطار",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أورام",
-                    "experience_years": "19",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -268,8 +218,6 @@
                     "name": "الدكتور بهاء الدين الكيلاني",
                     "image": "doctor.webp",
                     "job": "استشاري أمراض جهاز الهضم",
-                    "experience_years": "19",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -278,8 +226,6 @@
                     "name": "الدكتور عبيدة بهاء الدين الكيلاني",
                     "image": "doctor.webp",
                     "job": "استشاري أمراض العيون وجراحتها",
-                    "experience_years": "",
-                    "residence": "بريطانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -288,8 +234,6 @@
                     "name": "الدكتورة ميساء فؤاد خنجر",
                     "image": "doctor.webp",
                     "job": "إستشارية أمراض داخلية",
-                    "experience_years": "17",
-                    "residence": "غير معروف",
                     "about": "",
                     "contact": [
                     ]
@@ -298,8 +242,6 @@
                     "name": "الدكتور سليم نور الدين اللحام",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة تجميل",
-                    "experience_years": "15",
-                    "residence": "قطر",
                     "about": "",
                     "contact": [
                     ]
@@ -308,8 +250,6 @@
                     "name": "الدكتور فراس محمد صالح ميرو",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض داخلية",
-                    "experience_years": "16",
-                    "residence": "بريطانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -318,8 +258,6 @@
                     "name": "الدكتور عبد العزيز سنجاب",
                     "image": "doctor.webp",
                     "job": "أخصائي جراحة بولية",
-                    "experience_years": "17",
-                    "residence": "المانيا",
                     "about": "",
                     "contact": [
                     ]
@@ -328,8 +266,6 @@
                     "name": "الدكتور منير خرشاف",
                     "image": "doctor.webp",
                     "job": "إستشاري تركيبات سنية",
-                    "experience_years": "8",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -338,8 +274,54 @@
                     "name": "الدكتور مرح أحمد حجازي الباشا",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة بولية",
-                    "experience_years": "18",
-                    "residence": "المملكة العربية السعودية",
+                    "about": "",
+                    "contact": [
+                    ]
+                },
+                {
+                    "name": "الدكتور ماهر المبارك",
+                    "image": "doctor.webp",
+                    "job": "إستشاري جراحة عامة وجراحة أورام",
+                    "about": "",
+                    "contact": [
+                    ]
+                },
+                {
+                    "name": "الدكتور راضي الشلبي",
+                    "image": "doctor.webp",
+                    "job": "بورد عربي في الأمراض الجلدية",
+                    "about": "",
+                    "contact": [
+                    ]
+                },
+                {
+                    "name": "الدكتور ماهر الشلبي",
+                    "image": "doctor.webp",
+                    "job": "إختصاصي علاج فيزيائي وأطراف صناعية",
+                    "about": "",
+                    "contact": [
+                    ]
+                },
+                {
+                    "name": "الدكتور صلاح الأغبر",
+                    "image": "doctor.webp",
+                    "job": "أخصائي علاج فيزيائي وأطراف صناعية",
+                    "about": "",
+                    "contact": [
+                    ]
+                },
+                {
+                    "name": "الدكتور ينال برازي",
+                    "image": "doctor.webp",
+                    "job": "إستشاري تخدير",
+                    "about": "",
+                    "contact": [
+                    ]
+                },
+                {
+                    "name": "الدكتور أيمن غويش",
+                    "image": "doctor.webp",
+                    "job": "إستشاري عينية",
                     "about": "",
                     "contact": [
                     ]
@@ -350,8 +332,6 @@
                     "name": "المهندس منصور السوادي",
                     "image": "engineer.webp",
                     "job": "التجهيزات والصيانة الطبية",
-                    "experience_years": "12",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]
@@ -360,8 +340,6 @@
                     "name": "علي برغلة",
                     "image": "engineer.webp",
                     "job": "خبير أتمته وذكاء إصطناعي",
-                    "experience_years": "0",
-                    "residence": "المملكة العربية السعودية",
                     "about": "",
                     "contact": [
                     ]

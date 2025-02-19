@@ -1,6 +1,7 @@
 use crate::config::USE_HTTPS;
+use crate::database::get_database_connection;
 
-use super::{get_database_connection, hash_account_details, Account, Role};
+use super::{hash_account_details, Account, Role};
 
 use actix_web::{cookie::Cookie, post, web, HttpResponse, Responder};
 use chrono::Local;

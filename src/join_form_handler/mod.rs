@@ -1,4 +1,4 @@
-use crate::accounts_managment::get_database_connection;
+use crate::database::get_database_connection;
 
 use actix_web::{post, web, HttpResponse, Responder};
 use chrono::Local;
@@ -59,7 +59,7 @@ pub async fn join_form_endpoint(form: web::Json<JoinFormRequest>) -> actix_web::
 
     match connection.execute(
         "INSERT INTO form (name, speciality, residence, phone_number, email, more, time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
-        (&form.name, &form.speciality, &form.residence, &form.phone_number, &form.email, &form.more, time), 
+        (&form.name, &form.speciality, &form.residence, &form.phone_number, &form.email, &form.more, time, uuid::Uuid::new_v4().to_string()), 
     ) {
         Ok(_) => { return Ok(HttpResponse::Ok().json(JoinFormResponse {
             success: true,
@@ -85,7 +85,8 @@ pub struct Form {
     phone_number: String,
     email: String,
     more: String,
-    time: String
+    time: String,
+    uuid: String
 }
 
 #[derive(Deserialize)]
@@ -121,7 +122,7 @@ pub async fn get_forms_endpoint(req: web::Json<GetFormsRequest>) -> actix_web::R
         }
     };
     
-    // Check if the account exists
+    // Check if the account exists and he is admin
     let grant_access: bool = match validation_statement.query_row(
         params![req.token, "Admin"],
         |row| row.get(0),
@@ -141,7 +142,7 @@ pub async fn get_forms_endpoint(req: web::Json<GetFormsRequest>) -> actix_web::R
         }));
     }
 
-    let mut forms_statement = match connection.prepare("SELECT name, speciality, residence, phone_number, email, more, time FROM form") {
+    let mut forms_statement = match connection.prepare("SELECT name, speciality, residence, phone_number, email, more, time, uuid FROM form") {
         Ok(statement) => statement,
         Err(e) => {
             eprintln!("We are the get_forms_endpoint function, We have failed to select stuff from the form table in the database! here is the error:\n{}", e);
@@ -158,7 +159,8 @@ pub async fn get_forms_endpoint(req: web::Json<GetFormsRequest>) -> actix_web::R
             phone_number: row.get(3)?,
             email: row.get(4)?,
             more: row.get(5)?,
-            time: row.get(6)?
+            time: row.get(6)?,
+            uuid: row.get(7)?
         })
     }) {
         Ok(iter) => iter,
@@ -170,6 +172,7 @@ pub async fn get_forms_endpoint(req: web::Json<GetFormsRequest>) -> actix_web::R
         }
     };
 
+    // I have tried to preinit this vector capacity with the length of forms_iter but it made this function return no forms somehow
     let mut forms: Vec<Form> = Vec::new();
 
     for form in forms_iter {

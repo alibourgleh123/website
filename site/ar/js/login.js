@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const loginButton = document.getElementById('loginButton');
 
-    // TODO: uncomment this when releasing the website
-    //usernameInput.focus();
+    usernameInput.focus();
 
     usernameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {

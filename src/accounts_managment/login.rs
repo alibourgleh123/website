@@ -1,4 +1,5 @@
-use crate::{accounts_managment::{get_database_connection, verify, Account}, config::USE_HTTPS};
+use crate::{accounts_managment::{verify, Account}, config::USE_HTTPS};
+use crate::database::get_database_connection;
 
 use actix_web::{cookie::Cookie, post, web, HttpResponse, Responder};
 use rusqlite::{params, Connection, Result};
