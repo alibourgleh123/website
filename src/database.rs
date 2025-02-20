@@ -1,13 +1,15 @@
 
 use std::process::exit;
 
-use rusqlite::{Connection, Result};
+use rusqlite::{params, Connection, Result};
+
+use crate::{accounts_managment::{register::register, Role}, config};
 
 pub fn init_database() {
-    // Crashing the program on error is fine here i guess
-    let conn = Connection::open("accounts.db").expect("failed to open accounts.db");
+    // Crashing the program on error is fine here
+    let connection = Connection::open("accounts.db").expect("failed to open accounts.db");
 
-    if conn.execute(
+    if connection.execute(
         "CREATE TABLE IF NOT EXISTS accounts (
             id    INTEGER PRIMARY KEY,
             username  TEXT NOT NULL,
@@ -17,11 +19,11 @@ pub fn init_database() {
             creation_date TEXT NOT NULL
         )",
         ()).is_err() {
-        println!("failed to create accounts table in the database, try to delete accounts.db file and rerun the program.");
+        eprintln!("failed to create accounts table in the database, try to delete accounts.db file and rerun the program.");
         exit(-1);
     }
 
-    if conn.execute(
+    if connection.execute(
         "CREATE TABLE IF NOT EXISTS form (
             id    INTEGER PRIMARY KEY,
             name          TEXT NOT NULL,
@@ -34,11 +36,11 @@ pub fn init_database() {
             uuid          TEXT NOT NULL
         )",
         ()).is_err() {
-        println!("failed to create form table in the database, try to delete accounts.db file and rerun the program.");
+        eprintln!("failed to create form table in the database, try to delete accounts.db file and rerun the program.");
         exit(-1);
     }
 
-    if conn.execute("
+    if connection.execute("
     CREATE TABLE IF NOT EXISTS consultations (
         id              INTEGER PRIMARY KEY,
         targeted_doctor TEXT NOT NULL,
@@ -50,8 +52,43 @@ pub fn init_database() {
         time            TEXT NOT NULL,
         uuid            TEXT NOT NULL
     )", ()).is_err() {
-        println!("failed to create consultations table in the database, try to delete accounts.db file and rerun the program.");
+        eprintln!("failed to create consultations table in the database, try to delete accounts.db file and rerun the program.");
         exit(-1);
+    }
+
+    if config::CREATE_ADMIN_ACCOUNT_IF_IT_DOESNT_EXIST {
+        let mut statement = match connection.prepare(
+            "SELECT EXISTS (
+                SELECT 1 
+                FROM accounts 
+                WHERE username = ?1
+            )",
+        ) {
+            Ok(statement) => statement,
+            Err(e) => {
+                eprintln!("failed to prepare the statement in init_database() function, here is the error {}", e);
+                exit(-1);
+            }
+        };
+
+        // Check if the account exists
+        let username_exists: bool = match statement.query_row(
+            params![config::ADMIN_ACCOUNT_USERNAME],
+            |row| row.get(0),
+        ) {
+            Ok(access) => access,
+            Err(e) => {
+                eprintln!("failed to check if USERNAME exists in database, here is the error: {}", e);
+                exit(-1);
+            }
+        };
+
+        if !username_exists {
+            if register(&connection, config::ADMIN_ACCOUNT_USERNAME, config::ADMIN_ACCOUNT_PASSWORD, "", Role::Admin).is_err() {
+                eprintln!("too lazy to write the error message");
+                exit(-1);
+            }
+        }
     }
 }
 

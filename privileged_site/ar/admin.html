@@ -353,6 +353,12 @@
             margin: 1rem;
             text-align: center;
         }
+
+        .attachment {
+            cursor: pointer;
+            text-decoration: underline;
+            color: rgb(123, 165, 255);
+        }
     </style>
 </head>
 <body>
@@ -360,12 +366,14 @@
         <div class="nav-container">
             <div class="title">
                 <h2 class="logo">مبادرة الأطباء المغتربين</h2>
-                <h4>في مدينة التل</h3>
+                <h4>في دمشق وريفها</h3>
             </div>
             <button class="mobile-menu-btn">☰</button>
             <nav class="nav-links">
                 <a class="nav-link active" data-tab="home">الرئيسية</a>
+                <a class="nav-link" data-tab="consultations">الإستشارات</a>
                 <a class="nav-link" data-tab="join-forms">نماذج الإنضمام</a>
+                <a class="nav-link" data-tab="dont-switch" onclick="window.location.href='/ar/index.html'">العودة للصفحة الرئيسية</a>
             </nav>
         </div>
     </header>
@@ -385,6 +393,14 @@
             </section>
         </div>
 
+        <!-- Consultations -->
+        <div id="consultations" class="tab-content">
+            <center><h1 style="margin-bottom: 1rem;">الإستشارات</h1></center>
+            <div id="consultations-container" class="forms-grid">
+                <div class="loading-text">جاري التحميل...</div>
+            </div>
+        </div>
+
         <!-- Join forms -->
         <div id="join-forms" class="tab-content">
             <center><h1 style="margin-bottom: 1rem;">نماذج الإنضمام للمبادرة</h1></center>
@@ -392,8 +408,6 @@
                 <div class="loading-text">جاري التحميل...</div>
             </div>
         </div>
-
-
 
         <!-- Popup Dialog -->
         <div id="popup" class="popup">
@@ -404,14 +418,106 @@
     </main>
 
     <footer>
-        <p>© 2025 مبادرة الأطباء المغتربين في مدينة التل. جميع الحقوق محفوظة</p>
+        <p>© 2025 مبادرة الأطباء المغتربين في دمشق وريفها. جميع الحقوق محفوظة</p>
     </footer>
 
     <script>
-        // Forms handler
-        async function fetchForms() {
+        async function download_file(uuid, file) {
+            fetch(`/download_attachment?file=${file}&uuid=${uuid}`, {
+                headers: {
+                    "Authorization": localStorage.getItem("access_token")
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Download failed");
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.style.display = "none";
+                a.href = url;
+                a.download = file;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => alert(error.message));
+        }
+
+        async function getAttachments(uuid) {
             try {
-                const response = await fetch('/get_forms', {
+                const response = await fetch('/get_attachments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: localStorage.getItem("access_token"),
+                        uuid: uuid
+                    })
+                });
+            
+                const data = await response.json();
+                const attachments = data.attachments || [];
+            
+                if (attachments.length === 0) {
+                    return "لا يوجد";
+                }
+            
+                return attachments.map(attachment => `<a class="attachment" dir="auto" onclick='event.preventDefault(); download_file("${uuid}", "${attachment}")'>${attachment}</a><br>`).join("\n");
+            } catch (error) {
+                console.error(error);
+                return "حدث خطأ";
+            }
+        }
+
+
+        async function createConsultationCard(consultation) {
+            let attachments = await getAttachments(consultation.uuid);
+            return `
+                <div class="form-card">
+                    <div class="form-header">
+                        <h4 style="color: var(--accent)">الاسم:</h4><h3>${consultation.name} ${consultation.sur_name}</h3>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">الدكتور</div>
+                        <div class="field-value">${consultation.targeted_doctor}</div>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">البريد الإلكتروني</div>
+                        <div class="field-value">${consultation.email}</div>
+                    </div>
+                    <div class="form-field">
+                        <div class="field-label">رقم الهاتف</div>
+                        <div class="field-value" dir="auto">${consultation.phone_number}</div>
+                    </div>
+                    ${consultation.issue ? `
+                    <div class="form-field">
+                        <div class="field-label">وصف المشكلة</div>
+                        <div class="field-value">${consultation.issue}</div>
+                    </div>
+                    ` : ''}
+                    <div class="form-field">
+                        <div class="field-label">المرفقات</div>
+                        <div class="field-value">${attachments}</div>
+                    </div>
+                    <div class="timestamp">
+                        ${consultation.time} <br> ${consultation.uuid}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function displayConsultations() {
+            const container = document.getElementById('consultations-container');
+            try {
+                let consultations;
+                
+                await fetch('/get_consultations', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -419,16 +525,33 @@
                     body: JSON.stringify({
                         token: localStorage.getItem("access_token")
                     })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    consultations = data.consultations;
                 });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch forms');
+                
+                if (consultations.length === 0) {
+                    container.innerHTML = '<div class="loading-text">لا يوجد إستشارات مقدمة حتى الآن</div>';
+                    return;
                 }
-                console.log(response.text());
-                //const data = await response.json();
-                return "";
+
+                // 🌟 SOLUTION: Wait for all cards to be created before joining them
+                const cards = await Promise.all(
+                    consultations
+                        .sort((a, b) => new Date(b.time) - new Date(a.time))
+                        .map(form => createConsultationCard(form))
+                );
+
+                container.innerHTML = cards.join('');
             } catch (error) {
-                console.error('Error fetching forms:', error);
-                throw error;
+                container.innerHTML = `
+                    <div class="error-message">
+                        حدث خطأ أثناء تحميل الإستشارات. الرجاء المحاولة مرة أخرى لاحقاً.
+                        <br>
+                        الخطأ: ${error}
+                    </div>
+                `;
             }
         }
 
@@ -507,6 +630,9 @@
         }
 
         // Load forms when the tab is shown
+        document.querySelector('[data-tab="consultations"]').addEventListener('click', displayConsultations);
+
+        // Load forms when the tab is shown
         document.querySelector('[data-tab="join-forms"]').addEventListener('click', displayForms);
 
         // Tab switching functionality
@@ -516,6 +642,10 @@
         tabButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const tabId = button.dataset.tab;
+
+                if (tabId == "dont-switch") {
+                    return;
+                }
 
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 tabContents.forEach(content => content.classList.remove('active'));
@@ -541,15 +671,11 @@
 
         navItems.forEach(item => {
             item.addEventListener('click', (e) => {
+                if (item.dataset.tab == "dont-switch") {
+                    return;
+                }
+
                 e.preventDefault();
-                const targetId = item.getAttribute('href').substring(1);
-
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-
-                document.getElementById(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
 
                 // Close mobile menu after clicking
                 if (window.innerWidth <= 768) {

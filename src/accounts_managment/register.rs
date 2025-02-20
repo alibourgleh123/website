@@ -44,7 +44,7 @@ pub async fn register_endpoint(info: web::Json<RegisterRequest>) -> actix_web::R
         }
     };
 
-    let register_result = register(&connection, &info.username, &info.password, &info.token);
+    let register_result = register(&connection, &info.username, &info.password, &info.token, Role::Guest);
 
     let error_code = match register_result {
         Ok(_) => 0,
@@ -75,7 +75,7 @@ pub async fn register_endpoint(info: web::Json<RegisterRequest>) -> actix_web::R
     }))
 }
 
-pub fn register(connection: &Connection, username: &str, password: &str, token: &str) -> Result<(), RegistrationError> {
+pub fn register(connection: &Connection, username: &str, password: &str, token: &str, role: Role) -> Result<(), RegistrationError> {
     if username.chars().count() < 3 || username.chars().count() > 16 {
         return Err(RegistrationError::InvalidUsername);
     }
@@ -134,7 +134,7 @@ pub fn register(connection: &Connection, username: &str, password: &str, token: 
 
     match connection.execute(
         "INSERT INTO accounts (username, password, token, role, creation_date) VALUES (?1, ?2, ?3, ?4, ?5)",
-        (account.username, account.password, token, Role::Guest.to_string(), formatted_time), // By default every account is a guest
+        (account.username, account.password, token, role.to_string(), formatted_time), // By default every account is a guest
     ) {
         Ok(_) => Ok(()),
         Err(_) => Err(RegistrationError::DatabaseError),

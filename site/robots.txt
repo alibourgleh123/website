@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://syrianexpats.com/sitemap.xml

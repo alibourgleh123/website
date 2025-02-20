@@ -3,6 +3,7 @@ pub mod upload;
 use crate::database::get_database_connection;
 
 use actix_web::{post, web, HttpResponse, Responder};
+use chrono::Local;
 use rusqlite::{params, Connection};
 use serde::{Deserialize, Serialize};
 
@@ -57,11 +58,15 @@ pub async fn consultations_sending_handler_endpoint(info: web::Json<Consultation
         return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("يجب ألا يكون وصف حالتك فارغاً ويجب ألا يتجاوز 1024 حرفاً!".to_string()), uuid: None }));
     }
 
+    // Get current time 
+    let now = Local::now();
+    let formatted_time = now.format("%Y/%m/%d %I:%M:%S %p").to_string();
+
     let uuid = uuid::Uuid::new_v4().to_string();
 
     if let Err(e) = connection.execute(
-        "INSERT INTO consultations (targeted_doctor, name, sur_name, email, phone_number, issue, uuid) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
-        &[&info.targeted_doctor, &info.name, &info.sur_name, &info.email, &info.phone_number, &info.issue, &uuid ]
+        "INSERT INTO consultations (targeted_doctor, name, sur_name, email, phone_number, issue, time, uuid) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)",
+        &[&info.targeted_doctor, &info.name, &info.sur_name, &info.email, &info.phone_number, &info.issue, &formatted_time, &uuid ]
     ) {
         eprintln!("We are the consultations_sending_handler_endpoint function, We have failed to insert the consultation into the database!, here is the error:\n{}", e);
         return Ok(HttpResponse::InternalServerError().json(ConsultationResponse { error: Some("حدث خطأ بالخادم".to_string()), uuid: None }));

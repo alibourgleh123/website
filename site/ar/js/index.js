@@ -566,17 +566,17 @@ function toggleOthersGrid() {
 
   if (
     document.getElementById("others-dropdown-button").textContent ==
-    " ◀ المهندسون والفنيون"
+    " ◀ المهندسون والفنيون والصيدلانيون"
   ) {
     // Here others are dropped down
     document.getElementById("others-dropdown-button").textContent =
-      " ▼ المهندسون والفنيون";
+      " ▼ المهندسون والفنيون والصيدلانيون";
     others_grid.style.maxHeight = "fit-content";
     isOthersGridAnimating = false;
   } else {
     // Here others are not
     document.getElementById("others-dropdown-button").textContent =
-      " ◀ المهندسون والفنيون";
+      " ◀ المهندسون والفنيون والصيدلانيون";
     others_grid.style.maxHeight = "fit-content";
     setTimeout(function () {
       others_grid.style.maxHeight = "0";

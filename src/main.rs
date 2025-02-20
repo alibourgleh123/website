@@ -7,12 +7,12 @@ mod database;
 use actix_files::Files;
 use actix_web::{middleware, web, App, HttpServer, Responder};
 use actix_web::middleware::Logger;
-use chrono::Local;
 use env_logger::Env;
 use colorize::*;
 
 use database::init_database;
-use consultations_handler::{consultations_sending_handler_endpoint, upload::handle_consultations_upload};
+use consultations_handler::{consultations_sending_handler_endpoint, get_consultations_endpoint, 
+                            upload::{handle_consultations_upload, get_attachments_endpoint, download_attachment}};
 use accounts_managment::{misc_endpoints::{main_handler, get_user_info_endpoint},
                          login::login_endpoint,
                          register::register_endpoint
@@ -32,7 +32,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
-            .wrap(Logger::new(&format!("{} %{}a %r \n{} %D {} %{}i", Local::now().format("%I:%M:%S %p"), r"{r}", "serve time taken:".bold().cyan(), "device:".bold().cyan(), r"{User-Agent}")))
+            .wrap(Logger::new(&format!("%{}a %r \n{} %D {} %{}i", r"{r}", "serve time taken:".bold().cyan(), "device:".bold().cyan(), r"{User-Agent}")))
             .wrap(middleware::Compress::default())
             .service(web::redirect("/", "/ar/index.html"))
             .service(main_handler)
@@ -43,6 +43,9 @@ async fn main() -> std::io::Result<()> {
             .service(get_forms_endpoint)
             .service(consultations_sending_handler_endpoint)
             .service(handle_consultations_upload)
+            .service(get_consultations_endpoint)
+            .service(get_attachments_endpoint)
+            .route("/download_attachment", web::get().to(download_attachment))
             .service(Files::new("/", "./site").index_file("/ar/index.html")).default_service(web::get().to(invalid_path_handler))
     })
     .bind("127.0.0.1:8000")?

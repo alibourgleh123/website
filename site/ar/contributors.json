@@ -4,7 +4,7 @@
             "doctors": [ 
                 {
                     "name": "الدكتور صفوان برغلة",
-                    "image": "safwan.webp",
+                    "image": "doctor.webp",
                     "job": "اخصائي جراحة عظام",
                     "about": "الدكتور صفوان برغلة أخصائي جراحة عظام تخرج من جامعة حلب، وحصل على الماجستير من جامعة دمشق، وحاز على الدكتوراة من رومانيا، حالياً يقيم في حوطة سدير في المملكة العربية السعودية.",
                     "contact": [
@@ -25,324 +25,340 @@
                 {
                     "name": "الدكتور أحمد السوادي",
                     "image": "doctor.webp",
-                    "job": "الأمراض الوراثية و الخلايا الجذعية",
+                    "job": "دكتور باحث في الأمراض الوراثية و الخلايا الجذعية متخصص في مجال الاستشارات الاجتماعية الطبية والنفسية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور موفق حجازي",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض قلب أطفال",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور ماهر مصطفى فطوم",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أوعية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور مازن مسعود سليمان خالد",
                     "image": "doctor.webp",
                     "job": "جراحة عامة",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور أحمد محمد السويد",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أطفال وجراحة بولية عند الأطفال بالمنظار",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور زياد محمد السحلي",
                     "image": "doctor.webp",
-                    "job": "إستشاري جراحة أوعية",
+                    "job": "إستشاري أمراض القلب والأوعية الدموية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور أمجد محي الدين زينية",
                     "image": "doctor.webp",
-                    "job": "استشاري أمراض جهاز الهضم",
+                    "job": "أخصائي الأمراض الهضمية والكبد والطرق الصفراوية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور عادل أحمد سعدي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عظمية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور كنان أحمد فريد دهني",
                     "image": "doctor.webp",
-                    "job": "إستشاري جراحة عظمية",
+                    "job": "إستشاري جراحة عظمية (تبديل مفاصل صناعية)",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور حازم محمد شحادة خوت",
                     "image": "doctor.webp",
                     "job": "استشاري جراحة ثدي ترميمية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور آيات مصطفى سكري",
                     "image": "doctor.webp",
                     "job": "جراحة عامة",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور فراس سلعس",
                     "image": "doctor.webp",
                     "job": "إستشاري تقويم أسنان",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور عزة خنجر",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عصبية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور محمود حجازي",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض الأطفال",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور باسم خروس",
                     "image": "doctor.webp",
                     "job": "إستشاري أمراض الأطفال",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور مأمون كريز",
                     "image": "doctor.webp",
                     "job": "أخصائي جراحة بولية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور بهاء خنجر",
                     "image": "doctor.webp",
                     "job": "أخصائي جراحة بولية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور عبد الغني حجازي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عظمية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور يوسف عبد العزيز الورد",
                     "image": "doctor.webp",
                     "job": "إستشاري طب أسرة",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور أنس عفا الرفاعي",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عصبية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور تيسير جاموس",
                     "image": "doctor.webp",
                     "job": "إستشاري عيون",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور أحمد السحلي",
                     "image": "doctor.webp",
                     "job": "إستشاري أنف وأذن وحنجرة",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور نزار المدني",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عامة وتنظيرية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور حسام بيطار",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة أورام",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور بهاء الدين الكيلاني",
                     "image": "doctor.webp",
                     "job": "استشاري أمراض جهاز الهضم",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور عبيدة بهاء الدين الكيلاني",
                     "image": "doctor.webp",
                     "job": "استشاري أمراض العيون وجراحتها",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتورة ميساء فؤاد خنجر",
                     "image": "doctor.webp",
                     "job": "إستشارية أمراض داخلية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور سليم نور الدين اللحام",
                     "image": "doctor.webp",
-                    "job": "إستشاري جراحة تجميل",
+                    "job": "إستشاري جراحة تجميل و ترميم و يد جراحة مجهرية و جراحة وجه ترميمية",
                     "about": "",
-                    "contact": [
-                    ]
-                },
-                {
-                    "name": "الدكتور فراس محمد صالح ميرو",
-                    "image": "doctor.webp",
-                    "job": "إستشاري أمراض داخلية",
-                    "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور عبد العزيز سنجاب",
                     "image": "doctor.webp",
                     "job": "أخصائي جراحة بولية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور منير خرشاف",
                     "image": "doctor.webp",
                     "job": "إستشاري تركيبات سنية",
                     "about": "",
-                    "contact": [
-                    ]
-                },
-                {
-                    "name": "الدكتور مرح أحمد حجازي الباشا",
-                    "image": "doctor.webp",
-                    "job": "إستشاري جراحة بولية",
-                    "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور ماهر المبارك",
                     "image": "doctor.webp",
                     "job": "إستشاري جراحة عامة وجراحة أورام",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور راضي الشلبي",
                     "image": "doctor.webp",
                     "job": "بورد عربي في الأمراض الجلدية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور ماهر الشلبي",
                     "image": "doctor.webp",
                     "job": "إختصاصي علاج فيزيائي وأطراف صناعية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور صلاح الأغبر",
                     "image": "doctor.webp",
                     "job": "أخصائي علاج فيزيائي وأطراف صناعية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور ينال برازي",
                     "image": "doctor.webp",
                     "job": "إستشاري تخدير",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
                     "name": "الدكتور أيمن غويش",
                     "image": "doctor.webp",
                     "job": "إستشاري عينية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
+                },
+                {
+                    "name": "الدكتور برهان محمد قنبر",
+                    "image": "doctor.webp",
+                    "job": "إختصاصي اشعة",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "الدكتور وسام فريد البني",
+                    "image": "doctor.webp",
+                    "job": "إستشاري جراحة عامة وتنظيرية وطب اسرة",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "الدكتور محمد علي الزعبي",
+                    "image": "doctor.webp",
+                    "job": "إستشاري أمراض عصبية",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "الدكتور فراس محمد صالح ميرو",
+                    "image": "doctor.webp",
+                    "job": "إستشاري داخلية عامة",
+                    "about": "",
+                    "contact": []
                 }
             ],
             "others": [
                 {
                     "name": "المهندس منصور السوادي",
-                    "image": "engineer.webp",
+                    "image": "medical_equipment.webp",
                     "job": "التجهيزات والصيانة الطبية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
                 },
                 {
-                    "name": "علي برغلة",
-                    "image": "engineer.webp",
-                    "job": "خبير أتمته وذكاء إصطناعي",
+                    "name": "المهندس هيثم غضبان",
+                    "image": "medical_equipment.webp",
+                    "job": "التجهيزات والصيانة الطبية",
                     "about": "",
-                    "contact": [
-                    ]
+                    "contact": []
+                },
+                {
+                    "name": "الدكتورة مرح أحمد حجازي الباشا",
+                    "image": "medicines.webp",
+                    "job": "صيدلانية",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "الدكتور محمد عمر المظلوم",
+                    "image": "medicines.webp",
+                    "job": "صيدلاني",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "الأستاذ معتصم ياسين برغلة",
+                    "image": "engineer.webp",
+                    "job": "متخصص بالارشفة الالكترونية والتحول الرقمي والانظمة",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "المهندس رافي باسل الزرقا",
+                    "image": "engineer.webp",
+                    "job": "مهندس برمجيات",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "المهندس عبادة أحمد السحلي",
+                    "image": "engineer.webp",
+                    "job": "مهندس برمجيات",
+                    "about": "",
+                    "contact": []
+                },
+                {
+                    "name": "علي صفوان برغلة",
+                    "image": "engineer.webp",
+                    "job": "خبير أتمته وبرمجيات",
+                    "about": "",
+                    "contact": []
                 }
             ]
         }
