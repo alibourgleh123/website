@@ -91,14 +91,20 @@ function uploadSingleFile(file, index, uuid) {
     progressBar.value = 0;
     progressBar.max = 100;
     progressBar.id = `progress-${index}`;
+    progressBar.style.display = "block";
+    progressBar.style.maxWidth = "fit-content";
+    progressBar.style.margin = "0 auto";
 
     const statusText = document.createElement("span");
     statusText.id = `status-${index}`;
     statusText.innerText = `يتم رفع ${file.name}...`;
+    statusText.style.display = "block";
+    statusText.style.maxWidth = "fit-content";
+    statusText.style.margin = "0 auto";
 
+    document.getElementById("progressContainer").appendChild(document.createElement("br"));
     document.getElementById("progressContainer").appendChild(statusText);
     document.getElementById("progressContainer").appendChild(progressBar);
-    document.getElementById("progressContainer").appendChild(document.createElement("br"));
 
     fetch(`/uploadconsultationfile?filename=${encodeURIComponent(file.name)}&uuid=${encodeURIComponent(uuid)}`, {
         method: "POST",

@@ -58,17 +58,20 @@ pub async fn join_form_endpoint(form: web::Json<JoinFormRequest>) -> actix_web::
     let time = local.format("%Y/%m/%d %I:%M:%S %p").to_string();
 
     match connection.execute(
-        "INSERT INTO form (name, speciality, residence, phone_number, email, more, time) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
+        "INSERT INTO form (name, speciality, residence, phone_number, email, more, time, uuid) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?, ?8)",
         (&form.name, &form.speciality, &form.residence, &form.phone_number, &form.email, &form.more, time, uuid::Uuid::new_v4().to_string()), 
     ) {
         Ok(_) => { return Ok(HttpResponse::Ok().json(JoinFormResponse {
             success: true,
             error: "".to_string()
         })); },
-        Err(_) => { return Ok(HttpResponse::InternalServerError().json(JoinFormResponse {
-            success: false,
-            error: "حدث خطأ بالخادم".to_string()
-        })); },
+        Err(e) => {
+            eprintln!("we are join_form_endpoint function: we have encountered the following error:\n{}", e);
+            return Ok(HttpResponse::InternalServerError().json(JoinFormResponse {
+                success: false,
+                error: "حدث خطأ بالخادم".to_string()
+            }));
+        },
     };
 }
 
