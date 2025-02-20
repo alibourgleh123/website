@@ -10,6 +10,7 @@ use serde::{Deserialize, Serialize};
 
 // RegisterResponse errors follow the index of this enum
 // For example error code 2 = InvalidPassword
+#[derive(Debug)]
 pub enum RegistrationError {
     InvalidUsername,
     InvalidPassword,

@@ -84,8 +84,8 @@ pub fn init_database() {
         };
 
         if !username_exists {
-            if register(&connection, config::ADMIN_ACCOUNT_USERNAME, config::ADMIN_ACCOUNT_PASSWORD, "", Role::Admin).is_err() {
-                eprintln!("too lazy to write the error message");
+            if let Err(e) = register(&connection, config::ADMIN_ACCOUNT_USERNAME, config::ADMIN_ACCOUNT_PASSWORD, "سيد البراغل", Role::Admin) {
+                eprintln!("we are init_database function, register failed!, here is the error:\n{:?}", e);
                 exit(-1);
             }
         }
