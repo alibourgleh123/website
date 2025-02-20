@@ -1,4 +1,4 @@
-pub mod upload;
+pub mod attachments;
 
 use crate::database::get_database_connection;
 

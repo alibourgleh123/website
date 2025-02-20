@@ -12,7 +12,7 @@ use colorize::*;
 
 use database::init_database;
 use consultations_handler::{consultations_sending_handler_endpoint, get_consultations_endpoint, 
-                            upload::{handle_consultations_upload, get_attachments_endpoint, download_attachment}};
+                            attachments::{handle_consultations_upload, get_attachments_endpoint, download_attachment}};
 use accounts_managment::{misc_endpoints::{main_handler, get_user_info_endpoint},
                          login::login_endpoint,
                          register::register_endpoint
