@@ -5,10 +5,11 @@ mod consultations_handler;
 mod database;
 
 use actix_files::Files;
-use actix_web::{middleware, web, App, HttpServer, Responder};
+use actix_web::{middleware, web, App, HttpRequest, HttpResponse, HttpServer, Responder};
 use actix_web::middleware::Logger;
 use env_logger::Env;
 use colorize::*;
+use log::warn;
 
 use database::init_database;
 use consultations_handler::{consultations_sending_handler_endpoint, get_consultations_endpoint, 
@@ -18,10 +19,23 @@ use accounts_managment::{misc_endpoints::{main_handler, get_user_info_endpoint},
                          register::register_endpoint
                         };
 use join_form_handler::{get_forms_endpoint, join_form_endpoint};
+use urlencoding::decode;
 
-async fn invalid_path_handler() -> impl Responder {
-    "invalid link
-    الرابط غير صالح"
+async fn invalid_path_handler(req: HttpRequest) -> impl Responder {
+    let decoded_path = decode(&req.path()).unwrap_or_else(|_| "Invalid encoding".into());
+    warn!("Invalid link was requested: {}", decoded_path);
+    HttpResponse::NotFound()
+        .content_type("text/html")
+        .body(r#"
+                <style>
+                    :root {
+                        color-scheme: light dark;
+                    }
+                </style>
+                <meta charset="UTF-8">
+                <center><h1>Invalid Link</h1></center>
+                <center><h1>الرابط غير صالح</h1></center>
+                <center><a href="/ar/index.html">العودة للصفحة الرئيسية</center>"#)
 }
 
 #[actix_web::main]
