@@ -303,6 +303,13 @@ footer {
     text-align: center;
 }
 
+.phone-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    direction: ltr;
+}
+
 .input {
     width: 100%;
     background-color: #262626;
@@ -311,17 +318,26 @@ footer {
     font-size: 1rem;
     color: #FFFFFF;
     height: 3rem;
-    margin-bottom: 1rem;
     padding: 0 1rem;
     transition: all 0.3s ease;
-    margin-top: 1rem;
     resize: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .input.textfield:focus {
     outline: none;
     border-color: var(--accent-hover);
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.country-code {
+    width: 5rem;  /* Fixed width for country code */
+    text-align: center;
+}
+
+.phone-number {
+    flex-grow: 1;
 }
 
 .send-button {

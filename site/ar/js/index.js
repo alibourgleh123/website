@@ -1,3 +1,29 @@
+document.querySelectorAll('.country-code').forEach((input) => {
+  input.addEventListener('input', function (e) {
+    let value = e.target.value.replace(/[^0-9()]/g, '');
+
+    // Limit to 3 digits
+    value = value.slice(0, 3);
+  
+    // Add the "+" prefix
+    e.target.value = value ? `+${value}` : '';
+  });
+});
+
+document.querySelectorAll('.phone-number').forEach((input) => {
+  input.addEventListener('input', function (e) {
+      // Remove non-numeric characters
+      let value = e.target.value.replace(/[^0-9()]/g, '');
+
+      // Add space after the closing parentheses if it doesn't exist
+      if (value.includes(')') && !value.includes(') ')) {
+          value = value.replace(')', ') ');
+      }
+
+      e.target.value = value;
+  });
+});
+
 // The consultation form error handlers
 function showConsultationError(message) {
   const errorElement = document.getElementById("consultation-error-message");
@@ -36,7 +62,7 @@ async function sendConsultationRequest() {
             name: document.getElementById("consultation-patients-name").value,
             sur_name: document.getElementById("consultation-patients-surname").value,
             email: document.getElementById("consultation-patients-email").value,
-            phone_number: document.getElementById("consultation-patients-phone-number").value,
+            phone_number: `${document.getElementById("consultation-country-code").value} ${document.getElementById("consultation-patients-phone-number").value}`,
             issue: document.getElementById("consultation-patients-issue").value,
         }),
     })
@@ -237,7 +263,7 @@ function join_forum_sender() {
       name: document.getElementById("form-name").value,
       speciality: document.getElementById("form-job").value,
       residence: document.getElementById("form-country").value,
-      phone_number: document.getElementById("form-phone-number").value,
+      phone_number: `${document.getElementById("form-country-code").value} ${document.getElementById("form-phone-number").value}`,
       email: document.getElementById("form-email").value,
       more: document.getElementById("form-other-info").value,
     }),
