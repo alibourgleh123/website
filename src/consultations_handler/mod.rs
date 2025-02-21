@@ -50,8 +50,25 @@ pub async fn consultations_sending_handler_endpoint(info: web::Json<Consultation
         return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("البريد الإلكتروني غير صالح، يجب أن يكون بريداً فعلياً وألا تكون خانة البريد فارغة ويجب ألا يتجاوز طول بريدك 64 حرفاً".to_string()), uuid: None }));
     }
 
-    if info.phone_number.is_empty() || info.phone_number.chars().count() > 32 {
-        return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("يجب ألا يكون رقم الهاتف فارغاً ويجب ألا يتجاوز 32 حرفاً!".to_string()), uuid: None }));
+    // Syrian phone number follow this pattern
+    // +963 XXX XXX XXX
+    // or 
+    // +963 XXXXXXXXX
+    // The string "XXXXXXXXX" itself contains 9 characters
+    if info.phone_number.is_empty() {
+        return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("يجب ألا يكون رقم الهاتف فارغاً!".to_string()), uuid: None }));
+    }
+
+    if !info.phone_number.starts_with("+963") {
+        return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("يجب أن يكون رقم الهاتف سوريًّ! لا نقبل الحجوزات من خارج سوريا".to_string()), uuid: None }));
+    }
+
+    if let Some((_, phone_number)) = info.phone_number.split_once(' ') {
+        if phone_number.chars().count() != 9 {
+            return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("تأكد من رقم هاتفك! يجب أن يكون عدد أرقامه 9.".to_string()), uuid: None }));
+        }
+    } else {
+        return Ok(HttpResponse::BadRequest().json(ConsultationResponse { error: Some("رقم الهاتف المرسل للخادم غير صالح، تواصل معنا فهذه غالباً مشكلة من طرفنا".to_string()), uuid: None }));
     }
 
     if info.issue.is_empty() || info.issue.chars().count() > 1024 {

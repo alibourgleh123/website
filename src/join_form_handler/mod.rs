@@ -42,7 +42,7 @@ pub async fn join_form_endpoint(form: web::Json<JoinFormRequest>) -> actix_web::
     if let Some(response) = validate_length(&form.residence, 64, true, "يجب ألا يكون البلد الذي تقيم فيه فارغاً ويجب ألا تتجاوز حروف البلد الذي تقيم فيه 64 حرفاً!") {
         return Ok(response);
     }
-    if let Some(response) = validate_length(&form.phone_number, 64, true, "يجب ألا يكون رقم جوالك فارغاً ويجب ألا تتجاوز الأرقام المكونة لرقم جوالك 64 حرفاً!") {
+    if let Some(response) = validate_length(&form.phone_number, 32, true, "يجب ألا يكون رقم جوالك فارغاً ويجب ألا تتجاوز الأرقام المكونة لرقم جوالك 32 رقماً!") {
         return Ok(response);
     }
     if let Some(response) = validate_length(&form.email, 64, true, "يجب ألا يكون بريدك الإلكتروني فارغاً ويجب ألا تتجاوز حروف بريدك الإلكتروني 64 حرفاً!") {

@@ -31,11 +31,26 @@ async fn invalid_path_handler(req: HttpRequest) -> impl Responder {
                     :root {
                         color-scheme: light dark;
                     }
+            
+                    body {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        height: 100vh;
+                        margin: 0;
+                        flex-direction: column;
+                    }
+            
+                    a {
+                        font-size: 1.2rem;
+                        margin-top: 1rem;
+                    }
                 </style>
                 <meta charset="UTF-8">
-                <center><h1>Invalid Link</h1></center>
-                <center><h1>الرابط غير صالح</h1></center>
-                <center><a href="/ar/index.html">العودة للصفحة الرئيسية</center>"#)
+                <h1>Invalid Link</h1>
+                <h1>الرابط غير صالح</h1>
+                <a href="/ar/index.html">العودة للصفحة الرئيسية</a>"#)
 }
 
 #[actix_web::main]

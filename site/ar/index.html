@@ -40,6 +40,8 @@
                 <h1>الرعاية الطبية للجميع</h1>
                 <p>مبادرة طبية تهدف لتوفير الرعاية الصحية بأسعار في متناول المرضى محدودي الدخل</p>
                 <button class="cta-button" id="bookButton" data-tab="specialties">احجز استشارتك الآن</button>
+                <br>
+                <p style="margin-top: 2rem;"><b style="color: white;">تنويه: لا نقبل الحجوزات أو الإستشارات من الذين لا يقيمون في سوريا.</b></p>
             </section>
 
             <section class="who-are-we">
@@ -49,11 +51,12 @@
                     كافة الفروع الطبية، ونرغب بوضع خبرتنا في
                     خدمة سوريا الحرة. (مركز المبادرة مدينة دمشق
                     وريفها و نسعى لتوسيعها لتشمل جميع محافظات
-                    سوريا) سنقوم بمبادرة لخدمة أهالينا الأفاضل بفتح
+                    سوريا) قمنا بمبادرة لخدمة أهالينا الأفاضل بفتح
                     عيادات مجانية في مدينة دمشق وريفها؛ تم الاتفاق
                     مع مجمع عيادات 2&1 DMO لاستضافة الأطباء
                     الراغبين بالانضمام المبادرة. وتم الاتفاق مع عدة
                     مستشفيات لإجراء العمليات الجراحية بأقل تكلفة ممكنة.
+                    كما يمكن طلب الإستشارات عن بعد.
                 </p>
             </section>
             <h2 style="text-align: center; margin-top: 1rem;">مميزاتنا</h2>
@@ -136,13 +139,13 @@
                     </div>                    
                     <input class="input textfield" type="email" name="email" id="consultation-patients-email" placeholder="البريد الإلكتروني" required>
                     <p>اكتب ماهي مشكلتك (الأعراض التي تعاني منها، الأدوية التي تتناولها حالياً إن وجدت، متى بدأت المشكلة)</p>
-                    <textarea class="input" type="text" id="consultation-patients-issue" style="height: 8rem; padding-right: 0.5rem;" placeholder="اكتب مشكلتك هنا" required></textarea>
+                    <textarea class="input consultation-value-reset-after-submit" type="text" id="consultation-patients-issue" style="height: 8rem; padding-right: 0.5rem;" placeholder="اكتب مشكلتك هنا" required></textarea>
                     <p>ضع هنا تحاليلاً أو صور أشعة أو صوراً توضح مشكلتك إن وجدت هذه الصور (يمكنك ترك هذا فارغاً)</p>
-                    <input style="margin-top: 0.5rem;" type="file" id="ConsultationFiles" name="files[]" multiple>
+                    <input class=".consultation-value-reset-after-submit" style="margin-top: 0.5rem;" type="file" id="ConsultationFiles" name="files[]" multiple>
                     <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%; max-width: fit-content; margin: 0.5rem auto;">
                         <center>
-                            <div id="progressContainer"></div>
-                            <div id="status" style="display: block;"></div>
+                            <div class="html-reset-at-open" id="progressContainer"></div>
+                            <div class="html-reset-at-open" id="status" style="display: block;"></div>
                         </center>
                     </div>
                     <div class="info-message hidden" id="consultation-info-message" role="alert" style="margin: 1rem auto;">
@@ -171,20 +174,20 @@
             <div class="feature-card no-hover" style="margin-top: 2rem;">
                 <form onsubmit="event.preventDefault(); join_forum_sender()">
                     <h3>الإنضمام لنا</h3>
-                    <input class="input textfield" type="text" id="form-name" placeholder="أدخل اسمك " required>
+                    <input class="input textfield form-reset-after-submit" type="text" id="form-name" placeholder="أدخل اسمك " required>
                     <p>أدخل مهنتك أو تخصصك</p>
-                    <input class="input textfield" type="text" id="form-job" placeholder="التخصص" required>
+                    <input class="input textfield form-reset-after-submit" type="text" id="form-job" placeholder="التخصص" required>
                     <p>أدخل طرق التواصل</p>
-                    <input class="input textfield" type="text" id="form-country" placeholder="بلد الإقامة" required>
+                    <input class="input textfield form-reset-after-submit" type="text" id="form-country" placeholder="بلد الإقامة" required>
                     <div class="phone-input-group">
-                        <input class="input country-code" type="text" name="country-code" id="form-country-code" placeholder="+963" required>
-                        <input class="input phone-number" type="tel" name="phone" id="form-phone-number" placeholder="رقم جوالك" required>
+                        <input class="input country-code form-reset-after-submit" type="text" name="country-code" id="form-country-code" placeholder="+963" required>
+                        <input class="input phone-number form-reset-after-submit" type="tel" name="phone" id="form-phone-number" placeholder="رقم جوالك" required>
                     </div>
-                    <input class="input textfield" type="email" name="email" id="form-email" placeholder="البريد الإلكتروني" required>
+                    <input class="input textfield form-reset-after-submit" type="email" name="email" id="form-email" placeholder="البريد الإلكتروني" required>
                     <p>معلومات أخرى تحب أن تضيفها (يمكنك ترك هذا فارغاً)</p> 
-                    <textarea class="input" type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
+                    <textarea class="input form-reset-after-submit" type="text" id="form-other-info" style="height: 8rem; padding-right: 0.5rem;" placeholder="معلومات أخرى"></textarea>
                     <input type="submit" value="إرسال"  class="send-button" style="background-color: var(--accent)">
-                    <p style="color: gray; padding-top: 1rem;">ملاحظة: قد يستغرق الرد عليك 24 ساعة، لذلك تحلى بالصبر</p>
+                    <p style="color: gray; padding-top: 1rem;">سنحاول الرد عليك في أقرب وقت ممكن/p>
                     <div class="error-message hidden" id="error-message" role="alert">
                         <span>أعاد الخادم خطأً</span>
                     </div>

@@ -42,7 +42,7 @@ function showConsultationInfo(message) {
   document.getElementById('consultation-info-message').classList.remove("hidden");
 }
 
-function hideConsultationInfo(message) {
+function hideConsultationInfo() {
   document.getElementById('consultation-info-message').classList.add("hidden");
 }
 
@@ -74,6 +74,7 @@ async function sendConsultationRequest() {
         })
         .then((response) => {
             if (fetch_returned_an_error) {
+                hideConsultationInfo();
                 showConsultationError(response.error);
                 return;
             }
@@ -87,6 +88,10 @@ async function sendConsultationRequest() {
                 showConsultationError("فشلت عملية رفع ملفاتك");
                 consultationFilesUploadFailed = false;
             } else {
+                document.querySelectorAll('.consultation-value-reset-after-submit').forEach((input) => {
+                  input.value = '';
+                });
+                hideConsultationError();
                 showConsultationInfo("تم إرسال طلبك بنجاح، سيتم التواصل والتنسيق معك عن طريق طرق التواصل التي وضعتها");
             }
         })
@@ -211,6 +216,14 @@ function enableScroll() {
 let doctorNameVar = "";
 
 function showConsultationPopup() {
+  hideConsultationInfo();
+  hideConsultationError();
+  document.querySelectorAll('.html-reset-at-open').forEach((div) => {
+    div.innerHTML = '';
+  });
+  document.querySelectorAll('.consultation-value-reset-after-submit').forEach((input) => {
+    input.value = '';
+  });
   document.getElementById("consultation-popup").style.display = "flex";
   document.getElementById('consultation-doctor-name').innerText = `عند ${doctorNameVar}`;
   document.getElementById("closeConsultationPopup").addEventListener("click", function () {
@@ -271,6 +284,9 @@ function join_forum_sender() {
     .then((response) => response.json())
     .then((response) => {
       if (response.success) {
+        document.querySelectorAll('.form-reset-after-submit').forEach((input) => {
+          input.value = '';
+        });
         showPopup(
           "تم إرسال طلبك بنجاح",
           "أمهلنا بعض الوقت لمراجعة تفاصيل طلبك، توقع أن يتم التواصل معك عبر الإيميل، أو أننا سنرسل لك رسالة واتساب على نفس الرقم الذي أعطيتنا إياه، أذا تعذر كل ما سبق فسنضطر للإتصال بك. "
@@ -669,6 +685,10 @@ const sections = document.querySelectorAll("section");
 
 navItems.forEach((item) => {
   item.addEventListener("click", (e) => {
+    // Close consultation dialog when navigating throught the top bar
+    document.getElementById("consultation-popup").style.display = "none";
+    enableScroll();
+
     if (item.dataset.tab == "dont-switch") {
       return;
     }

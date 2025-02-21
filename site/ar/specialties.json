@@ -1,6 +1,15 @@
 {
     "specialties": [
         {
+            "name": "عام",
+            "icon": "doctor.svg",
+            "use_sublist": false,
+            "sublist": [],
+            "doctors": [
+                "الدكتورة آيات مصطفى سكري"
+            ]
+        },
+        {
             "name": "جراحة",
             "icon": "surgery.svg",
             "use_sublist": true,
