@@ -22,7 +22,6 @@
 
         @font-face {
             font-family: "Rubik";
-            /*src: url("../../site/fonts/Rubik-VariableFont_wght.ttf") format("truetype");*/
             src: url('/fonts/Rubik-VariableFont_wght.ttf') format("truetype");
             font-weight: normal;
             font-style: normal;
@@ -294,10 +293,11 @@
         }
 
         .forms-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 2rem auto;
+            justify-content: center;
         }
         
         .form-card {
@@ -306,7 +306,6 @@
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            height: 100%; /* Full height of the grid cell */
         }
         
         .form-header {
